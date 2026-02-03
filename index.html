@@ -6,7 +6,7 @@
   <title>Вика и Макс — свадебное приглашение</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-light: #cdbfb2;
@@ -30,12 +30,20 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: var(--bg-light);
       color: var(--text-dark);
       line-height: 1.7;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    p, span, li, label, a, input, textarea, select, button {
+      font-family: 'Montserrat', sans-serif;
     }
 
     @media (max-width: 768px) {
@@ -355,7 +363,7 @@
     }
 
     .save-the-day {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 0.75rem;
       font-weight: 300;
       letter-spacing: 0.3em;
@@ -572,6 +580,7 @@
     }
 
     .section-title {
+      font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
       text-align: center;
       margin-bottom: 3rem;
@@ -592,6 +601,7 @@
     }
 
     .venue-name {
+      font-family: 'Playfair Display', serif;
       font-size: 1.8rem;
       margin-bottom: 1rem;
       color: var(--bg-dark);
@@ -653,6 +663,7 @@
     }
 
     .schedule-event h3 {
+      font-family: 'Playfair Display', serif;
       font-size: 1.4rem;
       margin-bottom: 0.5rem;
       color: var(--bg-light);
@@ -675,6 +686,7 @@
     }
 
     .dresscode-item h3 {
+      font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       margin-bottom: 1rem;
       color: var(--bg-dark);
@@ -715,6 +727,7 @@
     }
 
     .details-item h3 {
+      font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       margin-bottom: 1rem;
       color: var(--bg-dark);
@@ -789,7 +802,7 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 12px;
       font-size: 1rem;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: rgba(255, 255, 255, 0.1);
       color: var(--text-light);
       transition: all 0.3s ease;
@@ -915,7 +928,7 @@
       border-radius: 12px;
       font-size: 1rem;
       font-weight: 600;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 0.5rem;
@@ -1282,27 +1295,6 @@
     </div>
   </section>
 
-  <!-- Место проведения -->
-  <section class="venue-section" data-animate="fade-up">
-    <div class="container">
-      <h2 class="section-title">Место проведения</h2>
-      <div class="venue-content">
-        <div class="venue-info">
-          <h3 class="venue-name">Банкетный зал "Северная"</h3>
-          <p class="venue-address">рабочий посёлок Шексна, микрорайон Шексна Северная, Первомайская ул., 1А</p>
-          <div class="venue-map">
-            <iframe 
-              src="https://yandex.ru/map-widget/v1/?um=constructor%3A39fe2b4b3f9c3e03560268ad282b331535bfaf7bff9c19db2410ebe4716d02a6&amp;source=constructor"
-              width="100%" 
-              height="300" 
-              frameborder="0">
-            </iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Распорядок дня -->
   <section class="schedule-section" data-animate="fade-up">
     <div class="container">
@@ -1347,6 +1339,25 @@
           </div>
         </div>
       </div>
+      
+      <!-- Место проведения -->
+      <div style="margin-top: 4rem;">
+        <h2 class="section-title" style="margin-bottom: 2rem;">Место проведения</h2>
+        <div class="venue-content">
+          <div class="venue-info">
+            <h3 class="venue-name">Банкетный зал "Северная"</h3>
+            <p class="venue-address">рабочий посёлок Шексна, микрорайон Шексна Северная, Первомайская ул., 1А</p>
+            <div class="venue-map">
+              <iframe 
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3A39fe2b4b3f9c3e03560268ad282b331535bfaf7bff9c19db2410ebe4716d02a6&amp;source=constructor"
+                width="100%" 
+                height="300" 
+                frameborder="0">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1355,14 +1366,6 @@
     <div class="container">
       <h2 class="section-title">Дресс-код</h2>
       <div class="dresscode-content">
-        <div class="dresscode-item">
-          <h3>Для мужчин</h3>
-          <p>Классический костюм темных оттенков, рубашка, галстук или бабочка. Приветствуются оттенки бордового и бежевого.</p>
-        </div>
-        <div class="dresscode-item">
-          <h3>Для женщин</h3>
-          <p>Коктейльное платье или элегантный костюм. Рекомендуемые цвета: бежевый, пудровый, бордовый. Избегайте белого цвета.</p>
-        </div>
               <div class="color-palette">
                 <div class="color-swatch" style="background: #40110D;"></div>
                 <div class="color-swatch" style="background: #591F12;"></div>
@@ -1464,10 +1467,6 @@
           <h3>Подарки</h3>
           <p>Если хотите подарить нам ценный и нужный подарок, мы будем очень благодарны за вклад в бюджет нашей молодой семьи.</p>
           <p style="margin-top: 1rem;">Мы просим Вас не дарить нам цветы, сразу после торжества мы уезжаем в свадебное путешествие и не успеем насладиться этой красотой! Но, по желанию, выразить Вашу любовь и радость можно в виде подарочного сертификата или бутылочке хорошего вина/шампанского, мы обещаем, что они точно не завянут.</p>
-        </div>
-        <div class="details-item">
-          <h3>Фото и видео</h3>
-          <p>Мы будем рады, если вы поделитесь своими фотографиями с праздника. Используйте хештег #ВикаИМакс2026 в социальных сетях.</p>
         </div>
         <div class="details-item">
           <h3>Контакты</h3>
