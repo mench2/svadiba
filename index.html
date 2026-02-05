@@ -46,13 +46,6 @@
       font-family: 'Montserrat', sans-serif;
     }
 
-    @media (max-width: 768px) {
-      .corner-flower {
-        width: 120px;
-        height: 120px;
-      }
-    }
-
     /* Секции */
     .section {
       padding: 4rem 1.5rem;
@@ -61,17 +54,9 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      transition: background 0.5s ease;
     }
 
-    .section-light {
-      background: var(--bg-light);
-      color: var(--text-dark);
-    }
-
-    .section-dark {
-      background: var(--bg-dark);
-      color: var(--text-light);
-    }
     .section-black {
       background: var(--bg-black);
       color: var(--text-light);
@@ -114,6 +99,7 @@
       transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1),
                   transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
       filter: blur(0.5px);
+      will-change: transform, opacity; /* Оптимизация анимации */
     }
 
     .hero-flower img {
@@ -122,238 +108,60 @@
       object-fit: contain;
     }
 
-    .hero-flower.top-left {
-      top: 2%;
-      left: 3%;
-      width: 450px;
-      height: 450px;
-      --final-rotation: -12deg;
-    }
+    /* ... (остальные стили для цветов) ... */
+    .hero-flower.top-left { top: 2%; left: 3%; width: 450px; height: 450px; }
+    .hero-flower.top-right { top: 8%; right: 4%; width: 420px; height: 420px; }
+    .hero-flower.bottom-left { bottom: 4%; left: 1%; width: 440px; height: 440px; }
+    .hero-flower.bottom-right { bottom: 6%; right: 2%; width: 430px; height: 430px; }
+    .hero-flower.center-left { top: 50%; left: -2%; transform: translateY(-50%); width: 380px; height: 380px; }
+    .hero-flower.center-right { top: 45%; right: -1%; transform: translateY(-50%); width: 400px; height: 400px; }
+    .hero-flower.center-top { top: 15%; left: 50%; transform: translateX(-50%); width: 360px; height: 360px; }
+    
+    .hero-flower.show { opacity: 0.15; }
+    .hero-flower.hide { opacity: 0 !important; }
 
-    .hero-flower.top-right {
-      top: 8%;
-      right: 4%;
-      width: 420px;
-      height: 420px;
-      --final-rotation: 18deg;
-    }
-
-    .hero-flower.bottom-left {
-      bottom: 4%;
-      left: 1%;
-      width: 440px;
-      height: 440px;
-      --final-rotation: 22deg;
-    }
-
-    .hero-flower.bottom-right {
-      bottom: 6%;
-      right: 2%;
-      width: 430px;
-      height: 430px;
-      --final-rotation: -16deg;
-    }
-
-    .hero-flower.center-left {
-      top: 50%;
-      left: -2%;
-      transform: translateY(-50%);
-      width: 380px;
-      height: 380px;
-      --final-rotation: 8deg;
-    }
-
-    .hero-flower.center-right {
-      top: 45%;
-      right: -1%;
-      transform: translateY(-50%);
-      width: 400px;
-      height: 400px;
-      --final-rotation: -10deg;
-    }
-
-    .hero-flower.center-top {
-      top: 15%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 360px;
-      height: 360px;
-      --final-rotation: 5deg;
-    }
-
-    .hero-flower.show {
-      opacity: 0.15;
-    }
-
-    .hero-flower.top-left.show {
-      transform: scale(1) rotate(-12deg) translateY(0) translateX(0);
-    }
-
-    .hero-flower.top-right.show {
-      transform: scale(1) rotate(18deg) translateY(0) translateX(0);
-    }
-
-    .hero-flower.bottom-left.show {
-      transform: scale(1) rotate(22deg) translateY(0) translateX(0);
-    }
-
-    .hero-flower.bottom-right.show {
-      transform: scale(1) rotate(-16deg) translateY(0) translateX(0);
-    }
-
-    .hero-flower.center-left.show {
-      transform: translateY(-50%) scale(1) rotate(8deg) translateX(0);
-    }
-
-    .hero-flower.center-right.show {
-      transform: translateY(-50%) scale(1) rotate(-10deg) translateX(0);
-    }
-
-    .hero-flower.center-top.show {
-      transform: translateX(-50%) scale(1) rotate(5deg) translateY(0);
-    }
-
-    .hero-flower.hide {
-      opacity: 0 !important;
-    }
-
-    .hero-flower.top-left.hide {
-      transform: scale(0.8) rotate(-12deg) translateY(300px) translateX(200px) !important;
-    }
-
-    .hero-flower.top-right.hide {
-      transform: scale(0.8) rotate(18deg) translateY(300px) translateX(-200px) !important;
-    }
-
-    .hero-flower.bottom-left.hide {
-      transform: scale(0.8) rotate(22deg) translateY(-150px) translateX(250px) !important;
-    }
-
-    .hero-flower.bottom-right.hide {
-      transform: scale(0.8) rotate(-16deg) translateY(-150px) translateX(-250px) !important;
-    }
-
-    .hero-flower.center-left.hide {
-      transform: translateY(-50%) scale(0.8) rotate(8deg) translateX(300px) !important;
-    }
-
-    .hero-flower.center-right.hide {
-      transform: translateY(-50%) scale(0.8) rotate(-10deg) translateX(-300px) !important;
-    }
-
-    .hero-flower.center-top.hide {
-      transform: translateX(-50%) scale(0.8) rotate(5deg) translateY(350px) !important;
-    }
+    .hero-flower.top-left.show { transform: scale(1) rotate(-12deg) translateY(0) translateX(0); }
+    .hero-flower.top-right.show { transform: scale(1) rotate(18deg) translateY(0) translateX(0); }
+    .hero-flower.bottom-left.show { transform: scale(1) rotate(22deg) translateY(0) translateX(0); }
+    .hero-flower.bottom-right.show { transform: scale(1) rotate(-16deg) translateY(0) translateX(0); }
+    .hero-flower.center-left.show { transform: translateY(-50%) scale(1) rotate(8deg) translateX(0); }
+    .hero-flower.center-right.show { transform: translateY(-50%) scale(1) rotate(-10deg) translateX(0); }
+    .hero-flower.center-top.show { transform: translateX(-50%) scale(1) rotate(5deg) translateY(0); }
+    
+    .hero-flower.top-left.hide { transform: scale(0.8) rotate(-12deg) translateY(300px) translateX(200px) !important; }
+    .hero-flower.top-right.hide { transform: scale(0.8) rotate(18deg) translateY(300px) translateX(-200px) !important; }
+    .hero-flower.bottom-left.hide { transform: scale(0.8) rotate(22deg) translateY(-150px) translateX(250px) !important; }
+    .hero-flower.bottom-right.hide { transform: scale(0.8) rotate(-16deg) translateY(-150px) translateX(-250px) !important; }
+    .hero-flower.center-left.hide { transform: translateY(-50%) scale(0.8) rotate(8deg) translateX(300px) !important; }
+    .hero-flower.center-right.hide { transform: translateY(-50%) scale(0.8) rotate(-10deg) translateX(-300px) !important; }
+    .hero-flower.center-top.hide { transform: translateX(-50%) scale(0.8) rotate(5deg) translateY(350px) !important; }
 
 
     @media (max-width: 768px) {
-      .hero-flower {
-        width: 280px !important;
-        height: 280px !important;
-      }
+      .countdown-section, .schedule-section, .rsvp-section, .gallery-section { margin: 1rem 0.5rem; border-radius: 16px; }
+      .hero-flower { width: 280px !important; height: 280px !important; }
+      .venue-section, .schedule-section, .dresscode-section, .details-section { padding: 4rem 1.5rem; }
+      .section-title { font-size: 2rem; margin-bottom: 2rem; }
+      .schedule-item { flex-direction: column; text-align: center; }
+      .schedule-item:not(:last-child)::after { display: none; }
+      .schedule-time { margin-right: 0; margin-bottom: 0.5rem; width: auto; }
+      .dresscode-content, .details-content { grid-template-columns: 1fr; gap: 2rem; }
+      
+      .hero-flower.top-left { top: 5%; left: 0%; }
+      .hero-flower.top-right { top: 7%; right: 0%; }
+      .hero-flower.bottom-left { bottom: 5%; left: -2%; }
+      .hero-flower.bottom-right { bottom: 7%; right: -1%; }
+      .hero-flower.center-left { left: -5%; width: 240px !important; height: 240px !important; }
+      .hero-flower.center-right { right: -4%; width: 240px !important; height: 240px !important; }
+      .hero-flower.center-top { width: 220px !important; height: 220px !important; top: 12%; }
 
-      .venue-section,
-      .schedule-section,
-      .dresscode-section,
-      .details-section {
-        padding: 4rem 1.5rem;
-      }
-
-      .section-title {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-      }
-
-      .schedule-item {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .schedule-item:not(:last-child)::after {
-        display: none;
-      }
-
-      .schedule-time {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
-        width: auto;
-      }
-
-      .dresscode-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .details-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .hero-flower.top-left {
-        top: 5%;
-        left: 0%;
-      }
-
-      .hero-flower.top-right {
-        top: 7%;
-        right: 0%;
-      }
-
-      .hero-flower.bottom-left {
-        bottom: 5%;
-        left: -2%;
-      }
-
-      .hero-flower.bottom-right {
-        bottom: 7%;
-        right: -1%;
-      }
-
-      .hero-flower.center-left {
-        left: -5%;
-        width: 240px !important;
-        height: 240px !important;
-      }
-
-      .hero-flower.center-right {
-        right: -4%;
-        width: 240px !important;
-        height: 240px !important;
-      }
-
-      .hero-flower.center-top {
-        width: 220px !important;
-        height: 220px !important;
-        top: 12%;
-      }
-
-      .hero-flower.top-left.hide {
-        transform: scale(0.7) rotate(-12deg) translateY(200px) translateX(150px) !important;
-      }
-
-      .hero-flower.top-right.hide {
-        transform: scale(0.7) rotate(18deg) translateY(200px) translateX(-150px) !important;
-      }
-
-      .hero-flower.bottom-left.hide {
-        transform: scale(0.7) rotate(22deg) translateY(-100px) translateX(180px) !important;
-      }
-
-      .hero-flower.bottom-right.hide {
-        transform: scale(0.7) rotate(-16deg) translateY(-100px) translateX(-180px) !important;
-      }
-
-      .hero-flower.center-left.hide {
-        transform: translateY(-50%) scale(0.7) rotate(8deg) translateX(200px) !important;
-      }
-
-      .hero-flower.center-right.hide {
-        transform: translateY(-50%) scale(0.7) rotate(-10deg) translateX(-200px) !important;
-      }
-
-      .hero-flower.center-top.hide {
-        transform: translateX(-50%) scale(0.7) rotate(5deg) translateY(250px) !important;
-      }
+      .hero-flower.top-left.hide { transform: scale(0.7) rotate(-12deg) translateY(200px) translateX(150px) !important; }
+      .hero-flower.top-right.hide { transform: scale(0.7) rotate(18deg) translateY(200px) translateX(-150px) !important; }
+      .hero-flower.bottom-left.hide { transform: scale(0.7) rotate(22deg) translateY(-100px) translateX(180px) !important; }
+      .hero-flower.bottom-right.hide { transform: scale(0.7) rotate(-16deg) translateY(-100px) translateX(-180px) !important; }
+      .hero-flower.center-left.hide { transform: translateY(-50%) scale(0.7) rotate(8deg) translateX(200px) !important; }
+      .hero-flower.center-right.hide { transform: translateY(-50%) scale(0.7) rotate(-10deg) translateX(-200px) !important; }
+      .hero-flower.center-top.hide { transform: translateX(-50%) scale(0.7) rotate(5deg) translateY(250px) !important; }
     }
 
     .hero-content {
@@ -374,900 +182,190 @@
       animation: fadeInUp 0.8s ease-out 0.2s forwards;
     }
 
-    .hero-photo {
-      width: 70%;
-      max-width: 70%;
-      margin: 0 auto 2.5rem;
-      border-radius: 0;
-      object-fit: cover;
-      aspect-ratio: 3/4;
-      box-shadow: none;
-      opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.4s forwards;
-      position: relative;
-      z-index: 100;
-    }
+    /* ... (остальные стили) ... */
+    .hero-photo { width: 70%; max-width: 70%; margin: 0 auto 2.5rem; border-radius: 0; object-fit: cover; aspect-ratio: 3/4; box-shadow: none; opacity: 0; animation: fadeInUp 0.8s ease-out 0.4s forwards; position: relative; z-index: 100; }
+    .hero-names-wrapper { opacity: 0; animation: fadeInUp 0.8s ease-out 0.6s forwards; }
+    .hero-names { font-family: 'Playfair Display', serif; font-size: clamp(1.75rem, 8vw, 3rem); font-weight: 300; color: var(--text-dark); margin-bottom: 1.5rem; line-height: 1.2; letter-spacing: 0.05em; }
+    .hero-names .ampersand { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 10vw, 4rem); font-weight: 300; font-style: italic; margin: 0 0.5rem; display: inline-block; }
+    .hero-date-wrapper { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.5rem; opacity: 0; animation: fadeInUp 0.8s ease-out 0.8s forwards; }
+    .hero-date-line { flex: 1; height: 1px; background: var(--bg-dark); opacity: 0.3; max-width: 80px; }
+    .hero-date { font-family: 'Playfair Display', serif; font-size: clamp(0.875rem, 3vw, 1.125rem); font-weight: 300; color: var(--bg-dark); letter-spacing: 0.1em; white-space: nowrap; }
 
-    .hero-names-wrapper {
-      opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.6s forwards;
-    }
-
-    .hero-names {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.75rem, 8vw, 3rem);
-      font-weight: 300;
-      color: var(--text-dark);
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-      letter-spacing: 0.05em;
-    }
-
-    .hero-names .ampersand {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 10vw, 4rem);
-      font-weight: 300;
-      font-style: italic;
-      margin: 0 0.5rem;
-      display: inline-block;
-    }
-
-    .hero-date-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1.5rem;
-      opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.8s forwards;
-    }
-
-    .hero-date-line {
-      flex: 1;
-      height: 1px;
-      background: var(--bg-dark);
-      opacity: 0.3;
-      max-width: 80px;
-    }
-
-    .hero-date {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(0.875rem, 3vw, 1.125rem);
-      font-weight: 300;
-      color: var(--bg-dark);
-      letter-spacing: 0.1em;
-      white-space: nowrap;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes slideInRight {
-      from {
-        opacity: 0;
-        transform: translateX(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes scaleIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
     /* Счетчик обратного отсчета */
-    .countdown-section {
-      background: var(--bg-dark);
-      padding: 8rem 1.5rem 4rem;
-      text-align: center;
-      border-radius: 24px;
-    }
-
-    .countdown-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 6vw, 2.5rem);
-      color: var(--text-light);
-      margin-bottom: 3rem;
-      opacity: 0;
-      animation: fadeInUp 0.8s ease-out forwards;
-    }
-
-    .countdown-grid {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .countdown-item {
-      text-align: center;
-      opacity: 0;
-      animation: scaleIn 0.6s ease-out forwards;
-    }
-
-    .countdown-item:nth-child(1) { animation-delay: 0.1s; }
-    .countdown-item:nth-child(2) { animation-delay: 0.2s; }
-    .countdown-item:nth-child(3) { animation-delay: 0.3s; }
-    .countdown-item:nth-child(4) { animation-delay: 0.4s; }
-
-    .countdown-number {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 8vw, 3.5rem);
-      font-weight: 400;
-      line-height: 1;
-      color: var(--text-light);
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-
-    .countdown-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      opacity: 0.8;
-    }
-
-    .countdown-separator {
-      font-size: clamp(1.5rem, 6vw, 2.5rem);
-      color: var(--text-light);
-      opacity: 0.5;
-      margin: 0 0.5rem;
-      line-height: 1;
-      padding-top: 1.5rem;
-    }
-
-    @media (max-width: 480px) {
-      .countdown-separator {
-        display: none;
-      }
-      
-      .countdown-grid {
-        gap: 0.75rem;
-      }
-    }
+    .countdown-section { background: var(--bg-dark); padding: 8rem 1.5rem 4rem; text-align: center; border-radius: 24px; margin: 2rem 1.5rem; box-shadow: 0 10px 40px rgba(84, 11, 22, 0.2); }
+    .countdown-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 6vw, 2.5rem); color: var(--text-light); margin-bottom: 3rem; opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
+    .countdown-grid { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem; max-width: 600px; margin: 0 auto; }
+    .countdown-item { text-align: center; opacity: 0; animation: scaleIn 0.6s ease-out forwards; position: relative; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 16px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; }
+    .countdown-item:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.08); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
+    .countdown-item:nth-child(1) { animation-delay: 0.1s; } .countdown-item:nth-child(2) { animation-delay: 0.2s; } .countdown-item:nth-child(3) { animation-delay: 0.3s; } .countdown-item:nth-child(4) { animation-delay: 0.4s; }
+    .countdown-number { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 400; line-height: 1; color: var(--text-light); margin-bottom: 0.5rem; display: block; animation: pulse 2s ease-in-out infinite; }
+    .countdown-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); opacity: 0.8; }
+    .countdown-separator { font-size: clamp(1.5rem, 6vw, 2.5rem); color: var(--text-light); opacity: 0.5; margin: 0 0.5rem; line-height: 1; padding-top: 1.5rem; }
+    @media (max-width: 480px) { .countdown-separator { display: none; } .countdown-grid { gap: 0.75rem; } }
+    .countdown-done { color: var(--text-light); font-family: 'Playfair Display', serif; font-size: 1.5rem; }
 
     /* Секции контента */
-    .venue-section,
-    .schedule-section,
-    .dresscode-section {
-      padding: 6rem 2rem;
-    }
-
-    .venue-section {
-      background: var(--bg-light);
-    }
-
-    .schedule-section {
-      background: var(--bg-dark);
-      color: var(--bg-light);
-      border-radius: 24px;
-    }
-
-    .dresscode-section {
-      background: var(--bg-light);
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      color: var(--bg-dark);
-    }
-
-    .schedule-section .section-title {
-      color: var(--bg-light);
-    }
+    .venue-section, .schedule-section, .dresscode-section { padding: 6rem 2rem; }
+    .venue-section, .dresscode-section, .details-section { background: var(--bg-light); }
+    .schedule-section { background: var(--bg-dark); color: var(--bg-light); border-radius: 24px; margin: 2rem 1.5rem; box-shadow: 0 10px 40px rgba(84, 11, 22, 0.2); }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 3rem; font-weight: 300; letter-spacing: 0.1em; color: var(--bg-dark); }
+    .schedule-section .section-title { color: var(--bg-light); }
 
     /* Место проведения */
-    .venue-content {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .venue-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: var(--bg-dark);
-      font-weight: 400;
-    }
-
-    .venue-address {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-      color: var(--accent-dark);
-      line-height: 1.6;
-    }
-
-    .venue-map {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(84, 11, 22, 0.1);
-    }
-
-    .map-note {
-      text-align: center;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: var(--accent-dark);
-      font-style: italic;
-    }
+    .venue-content { max-width: 800px; margin: 0 auto; text-align: center; }
+    .venue-name { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem; color: var(--bg-dark); font-weight: 400; }
+    .venue-address { font-size: 1.1rem; margin-bottom: 2rem; color: var(--accent-dark); line-height: 1.6; }
+    .venue-map { border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(84, 11, 22, 0.1); position: relative; }
+    .venue-map-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 10; pointer-events: auto; }
 
     /* Распорядок дня */
-    .schedule-timeline {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .schedule-item {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 2.5rem;
-      position: relative;
-    }
-
-    .schedule-item:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 80px;
-      top: 60px;
-      width: 2px;
-      height: 40px;
-      background: var(--accent-rose);
-      opacity: 0.5;
-    }
-
-    .schedule-time {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--accent-rose);
-      width: 80px;
-      flex-shrink: 0;
-      margin-right: 2rem;
-    }
-
-    .schedule-event h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
-      color: var(--bg-light);
-      font-weight: 500;
-    }
-
-    .schedule-event p {
-      color: var(--accent-pink);
-      line-height: 1.6;
-    }
+    .schedule-timeline { max-width: 600px; margin: 0 auto; position: relative; }
+    .schedule-timeline::before { content: ''; position: absolute; left: 80px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, transparent 0%, var(--accent-rose) 10%, var(--accent-rose) 90%, transparent 100%); opacity: 0.3; }
+    .schedule-item { display: flex; align-items: flex-start; margin-bottom: 2.5rem; position: relative; transition: transform 0.3s ease, opacity 0.3s ease; }
+    .schedule-item:hover { transform: translateX(8px); opacity: 0.95; }
+    .schedule-item:not(:last-child)::after { content: ''; position: absolute; left: 80px; top: 60px; width: 2px; height: 40px; background: var(--accent-rose); opacity: 0.5; }
+    .schedule-time { font-size: 1.3rem; font-weight: 600; color: var(--accent-rose); width: 80px; flex-shrink: 0; margin-right: 2rem; }
+    .schedule-event h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--bg-light); font-weight: 500; }
+    .schedule-event p { color: var(--accent-pink); line-height: 1.6; }
 
     /* Дресс-код */
-    .dresscode-content {
-      max-width: 800px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 3rem;
-    }
-
-    .dresscode-item h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--bg-dark);
-      font-weight: 500;
-    }
-
-    .dresscode-item p {
-      color: var(--accent-dark);
-      line-height: 1.6;
-    }
-
-    .dresscode-note {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 1.5rem;
-      background: var(--accent-pink);
-      border-radius: 12px;
-      margin-top: 1rem;
-    }
-
-    .dresscode-note p {
-      color: var(--bg-dark);
-      margin: 0;
-    }
+    .dresscode-content { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2rem; }
+    .color-palette { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; }
+    .color-bar { width: 30px; height: 150px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .color-bar:hover { transform: scale(1.05); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); }
+    .dresscode-note { text-align: center; padding: 1.5rem; background: var(--accent-pink); border-radius: 12px; margin-top: 2rem; box-shadow: 0 4px 16px rgba(84, 11, 22, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .dresscode-note:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(84, 11, 22, 0.15); }
+    .dresscode-note p { color: var(--bg-dark); margin: 0; }
 
     /* Детали */
-    .details-section {
-      background: var(--bg-light);
-      padding: 6rem 2rem;
-    }
-
-    .details-content {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3rem;
-    }
-
-    .details-item h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--bg-dark);
-      font-weight: 500;
-    }
-
-    .details-item p {
-      color: var(--accent-dark);
-      line-height: 1.6;
-    }
-
-    /* Цветовая палитра */
-    .color-palette {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 1.5rem;
-    }
-
-    .color-swatch {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 3px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
+    .details-section { background: var(--bg-light); padding: 6rem 2rem; }
+    .details-content { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+    .details-item { transition: transform 0.3s ease; padding: 1.5rem; border-radius: 12px; position: relative; }
+    .details-item:hover { transform: translateY(-4px); background: rgba(84, 11, 22, 0.02); }
+    .details-item::before { content: '✦'; position: absolute; top: 0; left: 0; font-size: 1.5rem; color: var(--accent-rose); opacity: 0.2; transform: translate(-1rem, -1rem); transition: all 0.3s ease; }
+    .details-item:hover::before { opacity: 0.4; transform: translate(-0.5rem, -0.5rem) rotate(15deg); }
+    .details-item h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1rem; color: var(--bg-dark); font-weight: 500; }
+    .details-item p { color: var(--accent-dark); line-height: 1.6; }
 
     /* RSVP форма */
-    .rsvp-section {
-      background: var(--bg-dark);
-      padding: 8rem 1.5rem 4rem;
-      position: relative;
-      border-radius: 24px;
-    }
-
-    .rsvp-section .section-title {
-      color: var(--bg-light);
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.75rem, 7vw, 2.5rem);
-      text-align: center;
-      margin-bottom: 2.5rem;
-      color: var(--text-light);
-    }
-
-    .rsvp-form {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      padding: 2rem 1.5rem;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      margin-bottom: 0.75rem;
-      opacity: 0.9;
-    }
-
-    .form-input,
-    .form-select {
-      width: 100%;
-      padding: 1rem 1.25rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      font-size: 1rem;
-      font-family: 'Montserrat', sans-serif;
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-light);
-      transition: all 0.3s ease;
-    }
-
-    .form-input::placeholder {
-      color: rgba(205, 191, 178, 0.5);
-    }
-
-    .form-input:focus,
-    .form-select:focus {
-      outline: none;
-      border-color: var(--bg-light);
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 0 3px rgba(205, 191, 178, 0.2);
-    }
-
-    .radio-group {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-    }
-
-    @media (max-width: 480px) {
-      .radio-group {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .radio-option {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      cursor: pointer;
-      padding: 0.75rem;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-    }
-
-    .radio-option:hover {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    /* Чекбоксы */
-    .checkbox-group {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-    }
-
-    @media (max-width: 480px) {
-      .checkbox-group {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .checkbox-option {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      cursor: pointer;
-      padding: 0.75rem;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-    }
-
-    .checkbox-option:hover {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .checkbox-option input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--bg-light);
-      border-radius: 4px;
-      background: transparent;
-      cursor: pointer;
-      appearance: none;
-      position: relative;
-    }
-
-    .checkbox-option input[type="checkbox"]:checked {
-      background: var(--bg-light);
-      border-color: var(--bg-light);
-    }
-
-    .checkbox-option input[type="checkbox"]:checked::after {
-      content: '✓';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: var(--bg-dark);
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .checkbox-option label {
-      color: var(--bg-light);
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .radio-option input[type="radio"] {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      accent-color: var(--bg-light);
-    }
-
-    .radio-option label {
-      cursor: pointer;
-      font-size: 1rem;
-      color: var(--text-light);
-    }
-
-    .form-submit {
-      width: 100%;
-      padding: 1.25rem 2rem;
-      background: var(--bg-light);
-      color: var(--bg-dark);
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: 'Montserrat', sans-serif;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 0.5rem;
-    }
-
-    .form-submit:hover {
-      background: var(--text-light);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    }
-
-    .form-submit:active {
-      transform: translateY(0);
-    }
-
-    /* Информационные секции */
-    .info-section {
-      padding: 4rem 1.5rem;
-    }
-
-    .info-card {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .info-card:last-child {
-      margin-bottom: 0;
-    }
-
-    .info-card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 6vw, 2rem);
-      margin-bottom: 1.5rem;
-    }
-
-    .section-light .info-card-title {
-      color: var(--text-dark);
-    }
-
-    .section-dark .info-card-title {
-      color: var(--text-light);
-    }
-
-    .info-card-content {
-      font-size: 1rem;
-      line-height: 1.8;
-    }
-
-    .section-light .info-card-content {
-      color: var(--text-dark);
-      opacity: 0.8;
-    }
-
-    .section-dark .info-card-content {
-      color: var(--text-light);
-      opacity: 0.9;
-    }
-
-    .info-card-content strong {
-      font-weight: 600;
-    }
-
-    /* Программа */
-    .schedule-list {
-      list-style: none;
-      margin-top: 1.5rem;
-    }
-
-    .schedule-item {
-      display: flex;
-      flex-direction: column;
-      padding: 1.25rem 0;
-      border-bottom: 1px solid;
-    }
-
-    .section-light .schedule-item {
-      border-bottom-color: rgba(84, 11, 22, 0.1);
-    }
-
-    .section-dark .schedule-item {
-      border-bottom-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .schedule-item:last-child {
-      border-bottom: none;
-    }
-
-    .schedule-time {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-light .schedule-time {
-      color: var(--bg-dark);
-    }
-
-    .section-dark .schedule-time {
-      color: var(--bg-light);
-    }
-
-    .schedule-event {
-      font-size: 1rem;
-    }
-
-    /* Дресс-код */
-      .color-palette {
-      display: flex;
-      justify-content: center;
-        gap: 0.75rem;
-      flex-wrap: wrap;
-      margin-top: 1.5rem;
-      }
-
-      .color-swatch {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .venue-photo {
-      width: 100%;
-      max-width: 100%;
-      margin: 1.5rem auto 0;
-      border-radius: 16px;
-      object-fit: cover;
-      aspect-ratio: 16/9;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    }
+    .rsvp-section { background: var(--bg-dark); padding: 8rem 1.5rem 4rem; position: relative; border-radius: 24px; margin: 2rem 1.5rem; box-shadow: 0 10px 40px rgba(84, 11, 22, 0.2); }
+    .rsvp-section .section-title { color: var(--text-light); font-family: 'Playfair Display', serif; font-size: clamp(1.75rem, 7vw, 2.5rem); text-align: center; margin-bottom: 2.5rem; }
+    .rsvp-form { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); padding: 2rem 1.5rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); position: relative; }
+    .rsvp-form::before { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background: linear-gradient(135deg, rgba(212, 165, 160, 0.3), rgba(232, 213, 208, 0.3), rgba(212, 165, 160, 0.3)); border-radius: 20px; z-index: -1; opacity: 0; transition: opacity 0.5s ease; }
+    .rsvp-form:hover::before { opacity: 1; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-label { display: block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.75rem; opacity: 0.9; }
+    .form-input, .form-select { width: 100%; padding: 1rem 1.25rem; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; font-size: 1rem; font-family: 'Montserrat', sans-serif; background: rgba(255, 255, 255, 0.1); color: var(--text-light); transition: all 0.3s ease; }
+    .form-input::placeholder { color: rgba(205, 191, 178, 0.5); }
+    .form-input:focus, .form-select:focus { outline: none; border-color: var(--bg-light); background: rgba(255, 255, 255, 0.15); box-shadow: 0 0 0 3px rgba(205, 191, 178, 0.2); }
+    .radio-group, .checkbox-group { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    @media (max-width: 480px) { .radio-group, .checkbox-group { grid-template-columns: 1fr; } }
+    .radio-option, .checkbox-option { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; padding: 0.75rem; border-radius: 8px; transition: background 0.3s ease; }
+    .radio-option:hover, .checkbox-option:hover { background: rgba(255, 255, 255, 0.05); }
+    .checkbox-option input[type="checkbox"] { width: 20px; height: 20px; border: 2px solid var(--bg-light); border-radius: 4px; background: transparent; cursor: pointer; appearance: none; position: relative; }
+    .checkbox-option input[type="checkbox"]:checked { background: var(--bg-light); border-color: var(--bg-light); }
+    .checkbox-option input[type="checkbox"]:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--bg-dark); font-size: 14px; font-weight: bold; }
+    .checkbox-option label { color: var(--bg-light); cursor: pointer; font-size: 1rem; }
+    .radio-option input[type="radio"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--bg-light); }
+    .radio-option label { cursor: pointer; font-size: 1rem; color: var(--text-light); }
+    .form-submit { width: 100%; padding: 1.25rem 2rem; background: var(--bg-light); color: var(--bg-dark); border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; font-family: 'Montserrat', sans-serif; cursor: pointer; transition: all 0.3s ease; margin-top: 0.5rem; }
+    .form-submit:hover { background: var(--text-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
+    .form-submit:active { transform: translateY(0); }
 
     /* Галерея */
-    .gallery-section {
-      padding: 4rem 1.5rem;
-      background: var(--bg-dark);
-      border-radius: 24px;
-    }
-
-    .gallery-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 6vw, 2.5rem);
-      text-align: center;
-      margin-bottom: 2.5rem;
-      color: var(--text-dark);
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-      aspect-ratio: 4/3;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .gallery-item:active {
-      transform: scale(0.98);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-
-    .gallery-item:active img {
-      transform: scale(1.05);
-    }
+    .gallery-section { padding: 4rem 1.5rem; background: var(--bg-dark); border-radius: 24px; margin: 2rem 1.5rem; box-shadow: 0 10px 40px rgba(84, 11, 22, 0.2); }
+    .gallery-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 6vw, 2.5rem); text-align: center; margin-bottom: 2.5rem; color: var(--text-light); }
+    .gallery-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    .gallery-item { position: relative; overflow: hidden; border-radius: 16px; aspect-ratio: 4/3; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+    .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2); }
+    .gallery-item:active { transform: scale(0.98) translateY(-4px); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-item:active img { transform: scale(1.05); }
 
     /* Анимации при скролле */
-      [data-animate] {
-      opacity: 0;
-    }
-
-    [data-animate="fade-up"] {
-      transform: translateY(40px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    [data-animate="fade-left"] {
-      transform: translateX(-40px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    [data-animate="fade-right"] {
-      transform: translateX(40px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    [data-animate="scale"] {
-      transform: scale(0.95);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    [data-animate].visible {
-        opacity: 1;
-      transform: translateY(0) translateX(0) scale(1);
-    }
+    [data-animate] { opacity: 0; }
+    [data-animate="fade-up"] { transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    [data-animate="fade-left"] { transform: translateX(-40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    [data-animate="fade-right"] { transform: translateX(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    [data-animate="scale"] { transform: scale(0.95); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    [data-animate].visible { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
 
     /* Адаптивность */
     @media (min-width: 768px) {
-      .section {
-        padding: 6rem 2rem;
-      }
-
-      .hero-section {
-        padding: 4rem 2rem;
-      }
-
-      .hero-content {
-        max-width: 700px;
-      }
-
-      .hero-photo {
-        margin-bottom: 3rem;
-      }
-
-      .rsvp-section {
-        padding: 10rem 2rem 6rem;
-      }
-
-      .countdown-grid {
-        gap: 1rem;
-      }
-
-      .countdown-separator {
-        margin: 0 1rem;
-      }
-
-      .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-      }
-
-      .radio-group {
-        flex-direction: row;
-        gap: 1.5rem;
-      }
-
-      .schedule-item {
-        flex-direction: row;
-        align-items: center;
-      }
-
-      .schedule-time {
-        min-width: 100px;
-        margin-right: 2rem;
-        margin-bottom: 0;
-      }
-
-      .dresscode-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .details-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .schedule-section,
-      .rsvp-section {
-        border-radius: 16px;
-      }
+      .section { padding: 6rem 2rem; }
+      .hero-section { padding: 4rem 2rem; }
+      .hero-content { max-width: 700px; }
+      .hero-photo { margin-bottom: 3rem; }
+      .rsvp-section { padding: 10rem 2rem 6rem; }
+      .countdown-grid { gap: 1rem; }
+      .countdown-separator { margin: 0 1rem; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+      .radio-group, .checkbox-group { flex-direction: row; gap: 1.5rem; }
+      .schedule-item { flex-direction: row; align-items: center; }
+      .schedule-time { min-width: 100px; margin-right: 2rem; margin-bottom: 0; }
+      .dresscode-content, .details-content { grid-template-columns: 1fr; gap: 2rem; }
+      .schedule-section, .rsvp-section, .gallery-section { border-radius: 16px; }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+
+    /* Декоративные элементы */
+    .section-divider { position: relative; height: 1px; margin: 4rem auto; max-width: 200px; background: linear-gradient(to right, transparent, var(--accent-rose), transparent); }
+    .section-divider::before, .section-divider::after { content: '❦'; position: absolute; top: 50%; transform: translateY(-50%); color: var(--accent-rose); font-size: 1.2rem; background: var(--bg-light); padding: 0 1rem; }
+    .section-divider::before { left: -2rem; } .section-divider::after { right: -2rem; }
+
+    /* Плавающие сердечки */
+    .floating-hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+    .floating-heart { position: absolute; width: 40px; height: 40px; opacity: 0; animation: floatHeart 15s infinite ease-in-out; pointer-events: none; }
+    .floating-heart img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)); }
+    @keyframes floatHeart { 0% { opacity: 0; transform: translateY(100vh) rotate(0deg); } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { opacity: 0; transform: translateY(-100px) rotate(360deg); } }
+
+    /* Декоративная рамка для фото */
+    .hero-photo { position: relative; }
+    .hero-photo::before { content: ''; position: absolute; top: -15px; left: -15px; right: -15px; bottom: -15px; border: 2px solid var(--accent-rose); opacity: 0.3; z-index: -1; transition: all 0.5s ease; }
+    .hero-photo:hover::before { opacity: 0.5; transform: scale(1.02); }
+
+    /* Параллакс эффект для секций */
+    .parallax-section { position: relative; overflow: hidden; }
+    .parallax-bg { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(212, 165, 160, 0.05), transparent); animation: rotateBg 30s linear infinite; pointer-events: none; }
+    @keyframes rotateBg { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    @media (max-width: 768px) { .floating-heart { width: 30px; height: 30px; } .schedule-timeline::before { display: none; } }
   </style>
 </head>
 <body>
-  <!-- Hero секция -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+
   <section class="hero-section">
-    <!-- Полупрозрачные цветы -->
     <div class="hero-flowers">
-      <div class="hero-flower top-left">
-        <img src="1234221312.png" alt="Цветок">
-        </div>
-      <div class="hero-flower top-right">
-        <img src="Gemini_Generated_Image_dr87k5dr87k.png" alt="Цветок">
-        </div>
-      <div class="hero-flower bottom-left">
-        <img src="1234221312.png" alt="Цветок">
-        </div>
-      <div class="hero-flower bottom-right">
-        <img src="234231234234.png" alt="Цветок">
-        </div>
-      <div class="hero-flower center-left">
-        <img src="Gemini_Generated_Image_dr87k5dr87k.png" alt="Цветок">
-        </div>
-      <div class="hero-flower center-right">
-        <img src="234231234234.png" alt="Цветок">
-      </div>
-      <div class="hero-flower center-top">
-        <img src="Gemini_Generated_Image_dr87k5dr87k.png" alt="Цветок">
-        </div>
-      </div>
+      <div class="hero-flower top-left"><img src="1234221312.png" alt="Цветок"></div>
+      <div class="hero-flower top-right"><img src="Gemini_Generated_Image_dr87k5dr87k.png" alt="Цветок"></div>
+      <div class="hero-flower bottom-left"><img src="1234221312.png" alt="Цветок"></div>
+      <div class="hero-flower bottom-right"><img src="234231234234.png" alt="Цветок"></div>
+      <div class="hero-flower center-left"><img src="Gemini_Generated_Image_dr87k5dr87k.png" alt="Цветок"></div>
+      <div class="hero-flower center-right"><img src="234231234234.png" alt="Цветок"></div>
+      <div class="hero-flower center-top"><img src="Gemini_Generated_Image_dr87k5dr87k.png" alt="Цветок"></div>
+    </div>
 
     <div class="hero-content">
-      <div class="save-the-day">SAVE THE DAY</div>
-      <img 
-        src="photo_5267273164138418047_y.jpg" 
-        alt="Вика и Макс" 
-        class="hero-photo"
-      >
+      <div class="save-the-day">SAVE THE DATE</div>
+      <img src="photo_5267273164138418047_y.jpg" alt="Вика и Макс" class="hero-photo">
       <div class="hero-names-wrapper">
-        <h1 class="hero-names">
-          ВИКА<span class="ampersand">&</span>МАКС
-        </h1>
+        <h1 class="hero-names">ВИКА<span class="ampersand">&</span>МАКС</h1>
       </div>
       <div class="hero-date-wrapper">
         <div class="hero-date-line"></div>
         <div class="hero-date">14 АВГУСТА 2026</div>
         <div class="hero-date-line"></div>
       </div>
-      </div>
+    </div>
   </section>
 
-  <!-- Счетчик обратного отсчета -->
   <section class="countdown-section" data-animate="fade-up">
     <div class="container">
       <h2 class="countdown-title">До нашего дня осталось</h2>
@@ -1295,65 +393,48 @@
     </div>
   </section>
 
-  <!-- Распорядок дня -->
-  <section class="schedule-section" data-animate="fade-up">
+  <div class="section-divider"></div>
+
+  <section class="schedule-section parallax-section" data-animate="fade-up">
+    <div class="parallax-bg"></div>
     <div class="container">
       <h2 class="section-title">Распорядок дня</h2>
       <div class="schedule-timeline">
         <div class="schedule-item">
           <div class="schedule-time">11:00</div>
-          <div class="schedule-event">
-            <h3>Общий сбор гостей</h3>
-            <p>Геолокация ЗАГСа</p>
-          </div>
+          <div class="schedule-event"><h3>Общий сбор гостей</h3><p>Геолокация ЗАГСа</p></div>
         </div>
         <div class="schedule-item">
           <div class="schedule-time">12:30</div>
-          <div class="schedule-event">
-            <h3>Начало свадебной церемонии</h3>
-            <p>От места встречи будет организован трансфер</p>
-          </div>
+          <div class="schedule-event"><h3>Начало свадебной церемонии</h3><p>От места встречи будет организован трансфер</p></div>
         </div>
         <div class="schedule-item">
           <div class="schedule-time">13:30</div>
-          <div class="schedule-event">
-            <h3>Окончание свадебной церемонии</h3>
-          </div>
+          <div class="schedule-event"><h3>Окончание свадебной церемонии</h3></div>
         </div>
         <div class="schedule-item">
           <div class="schedule-time">14:00</div>
-          <div class="schedule-event">
-            <h3>Выезд к ЗАГСУ</h3>
-          </div>
+          <div class="schedule-event"><h3>Выезд к ЗАГСУ</h3></div>
         </div>
         <div class="schedule-item">
           <div class="schedule-time">15:00</div>
-          <div class="schedule-event">
-            <h3>Торжественная роспись в ЗАГСе</h3>
-          </div>
+          <div class="schedule-event"><h3>Торжественная роспись в ЗАГСе</h3></div>
         </div>
         <div class="schedule-item">
           <div class="schedule-time">17:00</div>
-          <div class="schedule-event">
-            <h3>Начало банкета</h3>
-          </div>
+          <div class="schedule-event"><h3>Начало банкета</h3></div>
         </div>
       </div>
       
-      <!-- Место проведения -->
-      <div style="margin-top: 4rem;">
-        <h2 class="section-title" style="margin-bottom: 2rem;">Место проведения</h2>
+      <div style="margin-top: 5rem; padding-top: 4rem; border-top: 1px solid rgba(205, 191, 178, 0.2);">
+        <h2 class="section-title" style="margin-bottom: 2.5rem; color: var(--text-light);">Место проведения</h2>
         <div class="venue-content">
           <div class="venue-info">
-            <h3 class="venue-name">Банкетный зал "Северная"</h3>
-            <p class="venue-address">рабочий посёлок Шексна, микрорайон Шексна Северная, Первомайская ул., 1А</p>
+            <h3 class="venue-name" style="color: var(--text-light); font-size: 1.6rem; margin-bottom: 1rem;">Банкетный зал "Северная"</h3>
+            <p class="venue-address" style="color: var(--accent-pink); font-size: 1rem; margin-bottom: 2rem; line-height: 1.6;">рабочий посёлок Шексна, микрорайон Шексна Северная, Первомайская ул., 1А</p>
             <div class="venue-map">
-              <iframe 
-                src="https://yandex.ru/map-widget/v1/?um=constructor%3A39fe2b4b3f9c3e03560268ad282b331535bfaf7bff9c19db2410ebe4716d02a6&amp;source=constructor"
-                width="100%" 
-                height="300" 
-                frameborder="0">
-              </iframe>
+              <div class="venue-map-overlay" onclick="this.style.pointerEvents='none'"></div>
+              <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A39fe2b4b3f9c3e03560268ad282b331535bfaf7bff9c19db2410ebe4716d02a6&amp;source=constructor" width="100%" height="300" frameborder="0"></iframe>
             </div>
           </div>
         </div>
@@ -1361,41 +442,35 @@
     </div>
   </section>
 
-  <!-- Дресс-код -->
   <section class="dresscode-section" data-animate="fade-up">
     <div class="container">
       <h2 class="section-title">Дресс-код</h2>
       <div class="dresscode-content">
-              <div class="color-palette">
-                <div class="color-swatch" style="background: #40110D;"></div>
-                <div class="color-swatch" style="background: #591F12;"></div>
-                <div class="color-swatch" style="background: #8C5D5D;"></div>
-                <div class="color-swatch" style="background: #BF8F8F;"></div>
-                <div class="color-swatch" style="background: #D9C1BF;"></div>
-          </div>
-          <p style="text-align: center; margin-top: 1rem; color: var(--accent-dark); font-style: italic;">Мы будем очень рады, если вы поддержите цветовую гамму нашего мероприятия</p>
+        <div class="color-palette">
+          <div class="color-bar" style="background: #000000;"></div>
+          <div class="color-bar" style="background: #5C3A2E;"></div>
+          <div class="color-bar" style="background: #8C705F;"></div>
+          <div class="color-bar" style="background: #B09E8D;"></div>
+          <div class="color-bar" style="background: #D9D0C5;"></div>
         </div>
-        <div class="dresscode-note">
-          <p><strong>Обратите внимание:</strong> мероприятие проходит в помещении, удобная обувь приветствуется для танцев!</p>
-        </div>
+        <p style="text-align: center; margin-top: 1rem; color: var(--accent-dark); font-style: italic;">Мы будем очень рады, если вы поддержите цветовую гамму нашего мероприятия</p>
+      </div>
+      <div class="dresscode-note">
+        <p><strong>Обратите внимание:</strong> мероприятие проходит в помещении, удобная обувь приветствуется для танцев!</p>
       </div>
     </div>
   </section>
-  <!-- RSVP форма -->
-  <section class="rsvp-section" data-animate="fade-up">
+
+  <div class="section-divider"></div>
+
+  <section class="rsvp-section parallax-section" data-animate="fade-up">
+    <div class="parallax-bg"></div>
     <div class="container">
       <h2 class="section-title">Анкета</h2>
       <form class="rsvp-form" id="rsvpForm">
         <div class="form-group">
           <label class="form-label" for="name">ФИО</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            class="form-input" 
-            required
-            placeholder="Иванов Иван Иванович"
-          >
+          <input type="text" id="name" name="name" class="form-input" required placeholder="Иванов Иван Иванович">
         </div>
 
         <div class="form-group">
@@ -1415,50 +490,27 @@
         <div class="form-group">
           <label class="form-label">Предпочтения по алкоголю</label>
           <div class="checkbox-group">
-            <div class="checkbox-option">
-              <input type="checkbox" id="white-wine" name="alcohol" value="white-wine">
-              <label for="white-wine">Белое вино</label>
-            </div>
-            <div class="checkbox-option">
-              <input type="checkbox" id="red-wine" name="alcohol" value="red-wine">
-              <label for="red-wine">Красное вино</label>
-            </div>
-            <div class="checkbox-option">
-              <input type="checkbox" id="champagne" name="alcohol" value="champagne">
-              <label for="champagne">Шампанское</label>
-            </div>
-            <div class="checkbox-option">
-              <input type="checkbox" id="cognac" name="alcohol" value="cognac">
-              <label for="cognac">Коньяк</label>
-            </div>
-            <div class="checkbox-option">
-              <input type="checkbox" id="vodka" name="alcohol" value="vodka">
-              <label for="vodka">Водка</label>
-            </div>
-            <div class="checkbox-option">
-              <input type="checkbox" id="non-alcoholic" name="alcohol" value="non-alcoholic">
-              <label for="non-alcoholic">Безалкогольные напитки</label>
-            </div>
+            <div class="checkbox-option"><input type="checkbox" id="white-wine" name="alcohol" value="white-wine"><label for="white-wine">Белое вино</label></div>
+            <div class="checkbox-option"><input type="checkbox" id="red-wine" name="alcohol" value="red-wine"><label for="red-wine">Красное вино</label></div>
+            <div class="checkbox-option"><input type="checkbox" id="champagne" name="alcohol" value="champagne"><label for="champagne">Шампанское</label></div>
+            <div class="checkbox-option"><input type="checkbox" id="cognac" name="alcohol" value="cognac"><label for="cognac">Коньяк</label></div>
+            <div class="checkbox-option"><input type="checkbox" id="vodka" name="alcohol" value="vodka"><label for="vodka">Водка</label></div>
+            <div class="checkbox-option"><input type="checkbox" id="non-alcoholic" name="alcohol" value="non-alcoholic"><label for="non-alcoholic">Безалкогольные напитки</label></div>
           </div>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="allergies">Укажите, пожалуйста, есть ли у вас аллергия на какой-либо продукт</label>
-          <input 
-            type="text" 
-            id="allergies" 
-            name="allergies" 
-            class="form-input" 
-            placeholder="Например: орехи, морепродукты"
-          >
+          <input type="text" id="allergies" name="allergies" class="form-input" placeholder="Например: орехи, морепродукты">
         </div>
 
         <button type="submit" class="form-submit">Отправить</button>
       </form>
-      </div>
+    </div>
   </section>
 
-  <!-- Детали -->
+  <div class="section-divider"></div>
+
   <section class="details-section" data-animate="fade-up">
     <div class="container">
       <h2 class="section-title">Детали</h2>
@@ -1470,9 +522,7 @@
         </div>
         <div class="details-item">
           <h3>Контакты</h3>
-          <p>По всем вопросам обращайтесь к организаторам:<br>
-          Вика: +7 (999) 123-45-67<br>
-          Макс: +7 (999) 765-43-21</p>
+          <p>По всем вопросам обращайтесь к организаторам:<br>Вика: +7 (999) 123-45-67<br>Макс: +7 (999) 765-43-21</p>
         </div>
         <div class="details-item">
           <h3>Трансфер</h3>
@@ -1486,46 +536,37 @@
     </div>
   </section>
 
-  <!-- Галерея -->
-  <section class="gallery-section" data-animate="fade-up">
+  <div class="section-divider"></div>
+
+  <section class="gallery-section parallax-section" data-animate="fade-up">
+    <div class="parallax-bg"></div>
     <div class="container">
       <h2 class="gallery-title">Наши моменты</h2>
       <div class="gallery-grid">
-        <div class="gallery-item" data-animate="scale">
-          <img src="photo_5267273164138418050_y.jpg" alt="Фото 1">
-        </div>
-        <div class="gallery-item" data-animate="scale">
-          <img src="photo_5267273164138418051_y.jpg" alt="Фото 2">
-        </div>
-        <div class="gallery-item" data-animate="scale">
-          <img src="photo_5267273164138418047_y.jpg" alt="Фото 3">
-        </div>
-        </div>
+        <div class="gallery-item" data-animate="scale"><img src="photo_5267273164138418050_y.jpg" alt="Фото 1"></div>
+        <div class="gallery-item" data-animate="scale"><img src="photo_5267273164138418051_y.jpg" alt="Фото 2"></div>
+        <div class="gallery-item" data-animate="scale"><img src="photo_5267273164138418047_y.jpg" alt="Фото 3"></div>
       </div>
+    </div>
   </section>
 
-  <!-- Контакты -->
+  <div class="section-divider"></div>
+
   <section class="section section-black" data-animate="fade-up">
     <div class="container">
       <div class="info-card">
         <h3 class="info-card-title">Контакты</h3>
         <div class="info-card-content">
-          <p style="font-size: 1.25rem; margin-top: 1rem;">
-            <strong>+7 (999) 123-45-67</strong>
-          </p>
-          <p style="margin-top: 2rem; font-style: italic; opacity: 0.7;">
-            С любовью, Вика и Макс ♥
-          </p>
-    </div>
-  </div>
+          <p style="font-size: 1.25rem; margin-top: 1rem;"><strong>+7 (999) 123-45-67</strong></p>
+          <p style="margin-top: 2rem; font-style: italic; opacity: 0.7;">С любовью, Вика и Макс ♥</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <script>
     // Дата свадьбы: 14 августа 2026
     const weddingDate = new Date('2026-08-14T16:00:00+03:00');
-
-    // Таймер обратного отсчета
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
     const minutesEl = document.getElementById('minutes');
@@ -1533,9 +574,14 @@
 
     function updateCountdown() {
       const now = Date.now();
-      const diff = Math.max(weddingDate.getTime() - now, 0);
-      const sec = Math.floor(diff / 1000);
+      const diff = weddingDate.getTime() - now;
       
+      if (diff <= 0) {
+        document.querySelector('.countdown-grid').innerHTML = '<div class="countdown-done">Ура! Этот день настал!</div>';
+        return;
+      }
+
+      const sec = Math.floor(diff / 1000);
       const days = Math.floor(sec / 86400);
       const hours = Math.floor((sec % 86400) / 3600);
       const minutes = Math.floor((sec % 3600) / 60);
@@ -1550,32 +596,44 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Обработка формы RSVP
+    // Обработка формы RSVP с отправкой в Telegram
     const rsvpForm = document.getElementById('rsvpForm');
-    
-    rsvpForm.addEventListener('submit', function(e) {
+    rsvpForm.addEventListener('submit', async function(e) {
       e.preventDefault();
-      
       const formData = new FormData(rsvpForm);
-      const name = formData.get('name');
-      const attendance = formData.get('attendance');
-      const guests = formData.get('guests');
-      const alcohol = formData.get('alcohol');
-      const allergies = formData.get('allergies');
       
-      console.log('RSVP данные:', { name, attendance, guests, alcohol, allergies });
-      
-      alert('Спасибо! Мы будем очень рады видеть вас на нашей свадьбе!');
-      
-      rsvpForm.reset();
+      const text = `
+💌 <b>Новый гость!</b>
+👤 <b>Имя:</b> ${formData.get('name')}
+✅ <b>Присутствие:</b> ${formData.get('attendance') === 'yes' ? 'Буду' : 'Не смогу'}
+🍷 <b>Алкоголь:</b> ${formData.getAll('alcohol').join(', ') || 'Не пью'}
+🤧 <b>Аллергия:</b> ${formData.get('allergies') || 'Нет'}
+      `;
+
+      // ВАЖНО: Замените на свои значения!
+      const TOKEN = '8316450407:AAFQbmRbqaixPabmm9Ek8GkR1_DV4oPqdrI';
+      const CHAT_ID = '-1003830584076';
+      const URI_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+      try {
+          // Удалите alert ниже, если не хотите по       
+          
+          await fetch(URI_API, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'html' })
+          });
+          alert('Спасибо! Ваша анкета успешно отправлена!');
+          rsvpForm.reset();
+          
+      } catch (error) {
+          console.error('Ошибка:', error);
+          alert('Произошла ошибка при отправке. Пожалуйста, напишите нам в мессенджер.');
+      }
     });
 
     // Анимации при скролле
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -1585,45 +643,15 @@
       });
     }, observerOptions);
 
-    document.querySelectorAll('[data-animate]').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Анимация исчезновения цветов при скролле
-    const cornerFlowers = document.querySelectorAll('.corner-flower');
-    let scrolled = false;
-
-    function handleScroll() {
-      const scrollY = window.scrollY || window.pageYOffset;
-      
-      if (scrollY > 50 && !scrolled) {
-        scrolled = true;
-        cornerFlowers.forEach((flower, index) => {
-          const rotation = flower.classList.contains('top-left') ? -20 : 
-                          flower.classList.contains('top-right') ? 20 :
-                          flower.classList.contains('bottom-left') ? 20 : -20;
-          flower.style.setProperty('--rotation', `${rotation}deg`);
-          setTimeout(() => {
-            flower.classList.add('fade-out');
-          }, index * 100);
-        });
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.querySelectorAll('[data-animate]').forEach(el => { observer.observe(el); });
 
     // Управление цветами в hero-секции
     const heroSection = document.querySelector('.hero-section');
     const heroFlowers = document.querySelectorAll('.hero-flower');
     let heroFlowersVisible = false;
 
-    // Показываем цветы через 0.5 секунды после загрузки
     setTimeout(() => {
-      heroFlowers.forEach((flower, index) => {
-        setTimeout(() => {
-          flower.classList.add('show');
-        }, index * 100);
-      });
+      heroFlowers.forEach((flower, index) => { setTimeout(() => { flower.classList.add('show'); }, index * 100); });
       heroFlowersVisible = true;
     }, 500);
 
@@ -1631,29 +659,33 @@
       const scrollY = window.scrollY || window.pageYOffset;
       const heroSectionBottom = heroSection.offsetTop + heroSection.offsetHeight;
       
-      // Если прокрутили ниже hero-секции - прячем цветы под фото
       if (scrollY > heroSectionBottom * 0.3 && heroFlowersVisible) {
         heroFlowersVisible = false;
-        heroFlowers.forEach((flower, index) => {
-          setTimeout(() => {
-            flower.classList.remove('show');
-            flower.classList.add('hide');
-          }, index * 50);
-        });
-      }
-      // Если прокрутили обратно в hero-секцию - показываем цветы
-      else if (scrollY <= heroSectionBottom * 0.3 && !heroFlowersVisible) {
+        heroFlowers.forEach((flower, index) => { setTimeout(() => { flower.classList.remove('show'); flower.classList.add('hide'); }, index * 50); });
+      } else if (scrollY <= heroSectionBottom * 0.3 && !heroFlowersVisible) {
         heroFlowersVisible = true;
-        heroFlowers.forEach((flower, index) => {
-          setTimeout(() => {
-            flower.classList.remove('hide');
-            flower.classList.add('show');
-          }, index * 80);
-        });
+        heroFlowers.forEach((flower, index) => { setTimeout(() => { flower.classList.remove('hide'); flower.classList.add('show'); }, index * 80); });
       }
     }
-
     window.addEventListener('scroll', handleHeroScroll, { passive: true });
+
+    // Создание плавающих цветов
+    function createFloatingHearts() {
+      const heartsContainer = document.getElementById('floatingHearts');
+      for (let i = 0; i < 8; i++) {
+        const flower = document.createElement('div');
+        flower.className = 'floating-heart';
+        const img = document.createElement('img');
+        img.src = 'Flower.png';
+        img.alt = 'Цветок';
+        flower.appendChild(img);
+        flower.style.left = Math.random() * 100 + '%';
+        flower.style.animationDelay = Math.random() * 15 + 's';
+        flower.style.animationDuration = (10 + Math.random() * 10) + 's';
+        heartsContainer.appendChild(flower);
+      }
+    }
+    createFloatingHearts();
   </script>
 </body>
 </html>
