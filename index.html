@@ -32,7 +32,6 @@
     }
 
     html {
-      /* Убрали overflow-x отсюда, чтобы не ломать скролл на iOS */
       scroll-behavior: smooth;
     }
 
@@ -42,7 +41,7 @@
       color: var(--text-dark);
       line-height: 1.6;
       width: 100%;
-      overflow-x: hidden; /* Оставляем только на body */
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       position: relative;
     }
@@ -62,7 +61,6 @@
       text-align: center;
       padding: 2rem 1rem;
       position: relative;
-      /* Убрали overflow: hidden, чтобы контент не обрезался, если он выше экрана */
     }
 
     .hero-content {
@@ -87,7 +85,6 @@
       display: block;
       aspect-ratio: 3/4;
       object-fit: cover;
-      /* Закругления */
       border-radius: 24px; 
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       opacity: 0;
@@ -100,7 +97,7 @@
       position: absolute;
       top: -10px; left: -10px; right: -10px; bottom: -10px;
       border: 1px solid var(--accent-dark);
-      border-radius: 30px; /* Рамка тоже закругленная */
+      border-radius: 30px;
       opacity: 0.3;
       z-index: -1;
     }
@@ -218,7 +215,6 @@
         top: 0; left: 0; width: 100%; height: 100%;
         background: transparent;
         z-index: 5;
-        /* cursor: pointer; */
     }
     iframe { width: 100%; height: 100%; border: 0; }
 
@@ -455,19 +451,27 @@
   </section>
 
   <script>
-    const targetDate = new Date('2026-08-14T11:00:00+03:00').getTime();
+    // --- НАСТРОЙКИ ---
+    // Вставь сюда URL, который ты получишь после развертывания Google Apps Script
+    // Пример: 'https://script.google.com/macros/s/AKfycbx.../exec'
+    const GOOGLE_SCRIPT_URL = 'ВСТАВЬ_СЮДА_СВОЙ_URL_ОТ_GOOGLE_SCRIPT';
     
+    // Telegram настройки
+    const TG_TOKEN = '8316450407:AAFQbmRbqaixPabmm9Ek8GkR1_DV4oPqdrI';
+    const TG_CHAT_ID = '-1003830584076';
+
+    // --- ЛОГИКА ---
+    
+    // Таймер
+    const targetDate = new Date('2026-08-14T11:00:00+03:00').getTime();
     function updateTimer() {
       const now = new Date().getTime();
       const diff = targetDate - now;
-
       if (diff < 0) return;
-
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
       const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const s = Math.floor((diff % (1000 * 60)) / 1000);
-
       document.getElementById('days').innerText = d < 10 ? '0'+d : d;
       document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
       document.getElementById('minutes').innerText = m < 10 ? '0'+m : m;
@@ -476,46 +480,66 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
+    // Анимации
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 
+    // ОТПРАВКА ФОРМЫ
     document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const btn = this.querySelector('button');
       const originalText = btn.innerText;
       btn.innerText = 'Отправка...';
+      btn.disabled = true;
       
       const formData = new FormData(this);
-      const text = `
-💌 <b>Новый ответ!</b>
-👤 ${formData.get('name')}
-✅ ${formData.get('attendance') === 'yes' ? 'Будет' : 'Не будет'}
-🍷 ${formData.getAll('alcohol').join(', ') || 'Б/А'}
-🤧 ${formData.get('allergies') || '-'}
-      `;
+      const data = {
+        name: formData.get('name'),
+        attendance: formData.get('attendance'),
+        alcohol: formData.getAll('alcohol').join(', ') || 'Нет',
+        allergies: formData.get('allergies') || 'Нет'
+      };
 
-      const TOKEN = '8316450407:AAFQbmRbqaixPabmm9Ek8GkR1_DV4oPqdrI';
-      const CHAT_ID = '-1003830584076';
+      // 1. Отправка в Telegram
+      const tgText = `
+💌 <b>Новый ответ!</b>
+👤 ${data.name}
+✅ ${data.attendance === 'yes' ? 'Будет' : 'Не будет'}
+🍷 ${data.alcohol}
+🤧 ${data.allergies}
+      `;
+      
+      const sendTelegram = fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ chat_id: TG_CHAT_ID, text: tgText, parse_mode: 'html' })
+      });
+
+      // 2. Отправка в Google Таблицу (если URL задан)
+      let sendGoogle = Promise.resolve();
+      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith('http')) {
+        sendGoogle = fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors', // Важно для Google Script
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+        });
+      }
 
       try {
-        await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'html' })
-        });
+        await Promise.all([sendTelegram, sendGoogle]);
         alert('Спасибо! Мы получили ваш ответ.');
         this.reset();
       } catch (err) {
-        alert('Ошибка отправки. Напишите нам лично.');
+        console.error(err);
+        alert('Ошибка отправки. Пожалуйста, напишите нам лично.');
       } finally {
         btn.innerText = originalText;
+        btn.disabled = false;
       }
     });
   </script>
