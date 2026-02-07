@@ -16,14 +16,12 @@
       --accent-pink: #e8d5d0;
       --accent-rose: #d4a5a0;
       --accent-dark: #8b6f6a;
-      --bg-black: #000000;
       
       /* Палитра */
       --pal-champagne: #F2E5C6;
       --pal-sand: #F2D9A0;
       --pal-burgundy: #75162D;
       --pal-maroon: #560B18;
-      --pal-deep-wine: #3B010B;
     }
 
     * {
@@ -34,8 +32,8 @@
     }
 
     html {
+      /* Убрали overflow-x отсюда, чтобы не ломать скролл на iOS */
       scroll-behavior: smooth;
-      overflow-x: hidden;
     }
 
     body {
@@ -43,36 +41,20 @@
       background: var(--bg-light);
       color: var(--text-dark);
       line-height: 1.6;
-      overflow-x: hidden;
       width: 100%;
+      overflow-x: hidden; /* Оставляем только на body */
       -webkit-font-smoothing: antialiased;
+      position: relative;
     }
 
     h1, h2, h3, h4, h5, h6 {
       font-family: 'Playfair Display', serif;
     }
 
-    /* Базовые стили секций */
-    .section {
-      padding: 4rem 1.5rem;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      width: 100%;
-      position: relative;
-      z-index: 2;
-    }
-
     /* --- HERO SECTION --- */
     .hero-section {
-      min-height: 100vh; /* Высота на весь экран */
-      min-height: 100svh; /* Исправление для мобильных браузеров */
+      min-height: 100vh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -80,7 +62,7 @@
       text-align: center;
       padding: 2rem 1rem;
       position: relative;
-      overflow: hidden;
+      /* Убрали overflow: hidden, чтобы контент не обрезался, если он выше экрана */
     }
 
     .hero-content {
@@ -105,6 +87,8 @@
       display: block;
       aspect-ratio: 3/4;
       object-fit: cover;
+      /* Закругления */
+      border-radius: 24px; 
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       opacity: 0;
       animation: fadeInUp 0.8s ease-out 0.4s forwards;
@@ -116,6 +100,7 @@
       position: absolute;
       top: -10px; left: -10px; right: -10px; bottom: -10px;
       border: 1px solid var(--accent-dark);
+      border-radius: 30px; /* Рамка тоже закругленная */
       opacity: 0.3;
       z-index: -1;
     }
@@ -146,11 +131,25 @@
     .hero-flower img { width: 100%; height: auto; }
     .hero-flower.show { opacity: 0.12; }
     
-    /* Позиции цветов */
     .hf-tl { top: -5%; left: -10%; transform: rotate(-10deg); }
     .hf-tr { top: -5%; right: -10%; transform: rotate(10deg); }
     .hf-bl { bottom: -5%; left: -10%; transform: rotate(10deg); }
     .hf-br { bottom: -5%; right: -10%; transform: rotate(-10deg); }
+
+    /* --- COMMON --- */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+    .section-title {
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: var(--bg-dark);
+    }
 
     /* --- COUNTDOWN --- */
     .countdown-section {
@@ -162,19 +161,14 @@
       box-shadow: 0 10px 30px rgba(86, 11, 24, 0.25);
     }
     .countdown-title { color: var(--text-light); font-size: 1.8rem; margin-bottom: 2rem; }
-    
-    .countdown-grid {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
+    .countdown-grid { display: flex; justify-content: center; gap: 10px; }
     .countdown-item {
       background: rgba(255,255,255,0.08);
       padding: 10px;
       border-radius: 12px;
-      min-width: 65px;
+      min-width: 60px;
       flex: 1;
-      max-width: 100px;
+      max-width: 90px;
     }
     .countdown-number {
       font-family: 'Playfair Display', serif;
@@ -183,27 +177,11 @@
       line-height: 1;
       display: block;
     }
-    .countdown-label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      color: rgba(205, 191, 178, 0.7);
-      margin-top: 5px;
-    }
+    .countdown-label { font-size: 0.65rem; text-transform: uppercase; color: rgba(205, 191, 178, 0.7); margin-top: 5px; }
     .countdown-separator { color: var(--text-light); font-size: 2rem; opacity: 0.5; padding-top: 5px; }
-    
-    @media (max-width: 480px) {
-      .countdown-separator { display: none; } 
-    }
+    @media (max-width: 480px) { .countdown-separator { display: none; } }
 
-    /* --- COMMON TITLES --- */
-    .section-title {
-      font-size: clamp(2rem, 5vw, 2.5rem);
-      text-align: center;
-      margin-bottom: 2.5rem;
-      color: var(--bg-dark);
-    }
-
-    /* --- SCHEDULE --- */
+    /* --- SCHEDULE & MAP --- */
     .schedule-section {
       background: var(--bg-dark);
       color: var(--bg-light);
@@ -215,7 +193,7 @@
     
     .schedule-item {
       display: flex;
-      flex-direction: column; /* На мобильном вертикально */
+      flex-direction: column;
       align-items: center;
       text-align: center;
       margin-bottom: 2.5rem;
@@ -223,217 +201,72 @@
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     .schedule-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    
-    .schedule-time {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--accent-rose);
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-    }
+    .schedule-time { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent-rose); margin-bottom: 0.5rem; font-weight: bold; }
     .schedule-event h3 { font-size: 1.2rem; margin-bottom: 0.3rem; font-weight: 500; }
     .schedule-event p { font-size: 0.9rem; opacity: 0.8; }
 
-    /* Map reset */
-    iframe { max-width: 100%; border-radius: 12px; }
+    /* КАРТА С ЗАЩИТОЙ ОТ СКРОЛЛА */
+    .map-wrapper {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .map-overlay {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: transparent;
+        z-index: 5;
+        /* cursor: pointer; */
+    }
+    iframe { width: 100%; height: 100%; border: 0; }
 
     /* --- DRESS CODE --- */
     .dresscode-section { padding: 3rem 1.5rem; }
-    .color-palette {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin: 2rem 0;
-    }
-    .color-bar {
-      width: 40px;
-      height: 120px; /* Чуть меньше на моб */
-      border-radius: 50px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .dresscode-note {
-      background: var(--accent-pink);
-      padding: 1.5rem;
-      border-radius: 16px;
-      text-align: center;
-      font-size: 0.95rem;
-    }
+    .color-palette { display: flex; justify-content: center; gap: 8px; margin: 2rem 0; }
+    .color-bar { width: 40px; height: 120px; border-radius: 50px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .dresscode-note { background: var(--accent-pink); padding: 1.5rem; border-radius: 16px; text-align: center; font-size: 0.95rem; }
 
     /* --- DETAILS --- */
     .details-section { padding: 3rem 1.5rem; }
-    .details-grid {
-      display: grid;
-      gap: 2rem;
-    }
-    .details-item {
-      background: rgba(255,255,255,0.4);
-      padding: 1.5rem;
-      border-radius: 16px;
-      border: 1px solid rgba(84, 11, 22, 0.05);
-    }
-    .details-item h3 {
-      color: var(--bg-dark);
-      font-size: 1.4rem;
-      margin-bottom: 0.8rem;
-    }
-    
-    /* Важная информация */
-    .details-item.important {
-      background: var(--pal-champagne);
-      border: 2px solid var(--pal-burgundy);
-      text-align: center;
-      order: -1; /* Всегда первая */
-    }
-    .badge-18 {
-      display: inline-block;
-      background: var(--pal-burgundy);
-      color: var(--pal-champagne);
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      padding: 0.2rem 1rem;
-      border-radius: 50px;
-      margin-bottom: 1rem;
-    }
+    .details-grid { display: grid; gap: 2rem; }
+    .details-item { background: rgba(255,255,255,0.4); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(84, 11, 22, 0.05); }
+    .details-item h3 { color: var(--bg-dark); font-size: 1.4rem; margin-bottom: 0.8rem; }
+    .details-item.important { background: var(--pal-champagne); border: 2px solid var(--pal-burgundy); text-align: center; order: -1; }
+    .badge-18 { display: inline-block; background: var(--pal-burgundy); color: var(--pal-champagne); font-family: 'Playfair Display', serif; font-size: 1.8rem; padding: 0.2rem 1rem; border-radius: 50px; margin-bottom: 1rem; }
 
     /* --- GALLERY --- */
-    .gallery-section {
-      padding: 0 1.5rem 4rem;
-    }
-    .gallery-item {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-    .gallery-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+    .gallery-section { padding: 0 1.5rem 4rem; }
+    .gallery-item { border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+    .gallery-item img { width: 100%; height: auto; display: block; }
 
-    /* --- RSVP FORM (ANKETA) --- */
-    .rsvp-section {
-      background: var(--bg-dark);
-      padding: 4rem 1.5rem 6rem; /* Большой отступ снизу */
-      margin: 2rem 1rem 1rem;
-      border-radius: 20px;
-      color: var(--text-light);
-    }
+    /* --- RSVP FORM --- */
+    .rsvp-section { background: var(--bg-dark); padding: 4rem 1.5rem 6rem; margin: 2rem 1rem 1rem; border-radius: 20px; color: var(--text-light); }
     .rsvp-section .section-title { color: var(--text-light); }
-    
-    .rsvp-form {
-      background: rgba(255,255,255,0.05);
-      padding: 1.5rem;
-      border-radius: 16px;
-    }
-    
+    .rsvp-form { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 16px; }
     .form-group { margin-bottom: 1.5rem; }
-    .form-label {
-      display: block;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.8rem;
-      opacity: 0.9;
-    }
-    
-    /* Мобильные инпуты: шрифт 16px отменяет зум на iPhone */
-    input[type="text"] {
-      width: 100%;
-      padding: 1rem;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 16px; 
-      font-family: inherit;
-    }
-    input::placeholder { color: rgba(255,255,255,0.4); }
+    .form-label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; opacity: 0.9; }
+    input[type="text"] { width: 100%; padding: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: #fff; font-size: 16px; font-family: inherit; }
     input:focus { outline: none; border-color: var(--accent-rose); background: rgba(255,255,255,0.15); }
+    
+    .radio-group { display: flex; gap: 10px; }
+    .radio-option { flex: 1; position: relative; }
+    .radio-option input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .radio-option label { display: block; text-align: center; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; transition: 0.2s; font-weight: 500; }
+    .radio-option input:checked + label { background: var(--pal-champagne); color: var(--bg-dark); font-weight: bold; }
 
-    /* Большие кнопки Да/Нет */
-    .radio-group {
-      display: flex;
-      gap: 10px;
-    }
-    .radio-option {
-      flex: 1;
-      position: relative;
-    }
-    .radio-option input {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .radio-option label {
-      display: block;
-      text-align: center;
-      padding: 1rem;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.2s;
-      font-weight: 500;
-    }
-    /* Стиль выбранной радио-кнопки */
-    .radio-option input:checked + label {
-      background: var(--pal-champagne);
-      color: var(--bg-dark);
-      font-weight: bold;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
+    .checkbox-group { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .checkbox-option label { display: flex; align-items: center; padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 10px; cursor: pointer; }
+    .checkbox-option input { margin-right: 12px; width: 20px; height: 20px; accent-color: var(--pal-champagne); }
 
-    /* Чекбоксы алкоголя */
-    .checkbox-group {
-      display: grid;
-      grid-template-columns: 1fr; /* Одна колонка на моб */
-      gap: 10px;
-    }
-    .checkbox-option label {
-      display: flex;
-      align-items: center;
-      padding: 0.8rem;
-      background: rgba(255,255,255,0.05);
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .checkbox-option input {
-      margin-right: 12px;
-      width: 20px;
-      height: 20px;
-      accent-color: var(--pal-champagne);
-    }
+    .form-submit { width: 100%; padding: 1.2rem; background: var(--pal-champagne); color: var(--bg-dark); border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; margin-top: 1rem; cursor: pointer; }
+    .section-divider { height: 1px; background: rgba(84, 11, 22, 0.2); width: 60%; margin: 3rem auto; border: none; }
 
-    .form-submit {
-      width: 100%;
-      padding: 1.2rem;
-      background: var(--pal-champagne);
-      color: var(--bg-dark);
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      margin-top: 1rem;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    .form-submit:active { transform: scale(0.98); }
-
-    /* Divider */
-    .section-divider {
-      height: 1px;
-      background: rgba(84, 11, 22, 0.2);
-      width: 60%;
-      margin: 3rem auto;
-      border: none;
-    }
-
-    /* Анимации */
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     [data-animate] { opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
     [data-animate].visible { opacity: 1; transform: translateY(0); }
 
-    /* Десктопные улучшения (если откроют на компе) */
     @media (min-width: 768px) {
       .checkbox-group { grid-template-columns: 1fr 1fr; }
       .schedule-item { flex-direction: row; text-align: left; }
@@ -512,7 +345,12 @@
         <h2 class="section-title" style="color: var(--text-light)">Локация</h2>
         <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Банкетный зал "Северная"</h3>
         <p style="margin-bottom: 2rem; opacity: 0.8;">пгт. Шексна, мкр. Шексна Северная,<br>ул. Первомайская, 1А</p>
-        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A39fe2b4b3f9c3e03560268ad282b331535bfaf7bff9c19db2410ebe4716d02a6&amp;source=constructor" width="100%" height="250" frameborder="0"></iframe>
+        
+        <div class="map-wrapper">
+            <div class="map-overlay" onclick="this.style.pointerEvents='none'; this.style.opacity='0';"></div>
+            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A39fe2b4b3f9c3e03560268ad282b331535bfaf7bff9c19db2410ebe4716d02a6&amp;source=constructor" frameborder="0"></iframe>
+        </div>
+        <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.5rem;">Нажмите на карту, чтобы активировать</p>
       </div>
     </div>
   </section>
@@ -545,17 +383,14 @@
           <h3>Важно</h3>
           <p>Мы хотим, чтобы вы отдохнули. Вечер пройдет без детей.</p>
         </div>
-
         <div class="details-item">
           <h3>Подарки</h3>
           <p>Лучший подарок для нас — вклад в бюджет нашей молодой семьи. Просим не дарить цветы — мы сразу улетаем.</p>
         </div>
-
         <div class="details-item">
           <h3>Трансфер</h3>
           <p>Будет организован трансфер. Подробности сообщим дополнительно.</p>
         </div>
-
         <div class="details-item">
           <h3>Связь</h3>
           <p>Вика: +7 (999) 123-45-67<br>Макс: +7 (999) 765-43-21</p>
@@ -620,7 +455,6 @@
   </section>
 
   <script>
-    // Таймер: 14.08.2026 11:00
     const targetDate = new Date('2026-08-14T11:00:00+03:00').getTime();
     
     function updateTimer() {
@@ -642,7 +476,6 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Анимация при скролле
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -653,7 +486,6 @@
 
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 
-    // Отправка формы (Telegram)
     document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const btn = this.querySelector('button');
@@ -669,7 +501,6 @@
 🤧 ${formData.get('allergies') || '-'}
       `;
 
-      // Вставь свои токен и ID
       const TOKEN = '8316450407:AAFQbmRbqaixPabmm9Ek8GkR1_DV4oPqdrI';
       const CHAT_ID = '-1003830584076';
 
