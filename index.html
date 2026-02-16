@@ -32,6 +32,7 @@
     }
 
     html {
+      /* Убрали overflow-x отсюда, чтобы не ломать скролл на iOS */
       scroll-behavior: smooth;
     }
 
@@ -41,7 +42,7 @@
       color: var(--text-dark);
       line-height: 1.6;
       width: 100%;
-      overflow-x: hidden;
+      overflow-x: hidden; /* Оставляем только на body */
       -webkit-font-smoothing: antialiased;
       position: relative;
     }
@@ -61,6 +62,7 @@
       text-align: center;
       padding: 2rem 1rem;
       position: relative;
+      /* Убрали overflow: hidden, чтобы контент не обрезался, если он выше экрана */
     }
 
     .hero-content {
@@ -85,6 +87,7 @@
       display: block;
       aspect-ratio: 3/4;
       object-fit: cover;
+      /* Закругления */
       border-radius: 24px; 
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       opacity: 0;
@@ -97,7 +100,7 @@
       position: absolute;
       top: -10px; left: -10px; right: -10px; bottom: -10px;
       border: 1px solid var(--accent-dark);
-      border-radius: 30px;
+      border-radius: 30px; /* Рамка тоже закругленная */
       opacity: 0.3;
       z-index: -1;
     }
@@ -122,16 +125,34 @@
     .hero-date-line { flex: 1; height: 1px; background: var(--text-dark); opacity: 0.3; max-width: 60px; }
     .hero-date { font-size: 1rem; letter-spacing: 0.15em; }
 
-    /* Цветы (фон) */
+    /* Цветы (фон) — анимация как на первом сайте */
     .hero-flowers { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
-    .hero-flower { position: absolute; opacity: 0; transition: 1.5s ease; width: 300px; max-width: 50vw; }
-    .hero-flower img { width: 100%; height: auto; }
+    .hero-flower {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 300px;
+      max-width: 50vw;
+      filter: blur(0.5px);
+    }
+    .hero-flower img { width: 100%; height: auto; object-fit: contain; }
     .hero-flower.show { opacity: 0.12; }
-    
-    .hf-tl { top: -5%; left: -10%; transform: rotate(-10deg); }
-    .hf-tr { top: -5%; right: -10%; transform: rotate(10deg); }
-    .hf-bl { bottom: -5%; left: -10%; transform: rotate(10deg); }
-    .hf-br { bottom: -5%; right: -10%; transform: rotate(-10deg); }
+
+    .hf-tl { top: -5%; left: -10%; }
+    .hf-tl.show { transform: rotate(-10deg); }
+    .hf-tl.hide { transform: scale(0.8) rotate(-10deg) translateY(200px) translateX(150px) !important; opacity: 0 !important; }
+
+    .hf-tr { top: -5%; right: -10%; }
+    .hf-tr.show { transform: rotate(10deg); }
+    .hf-tr.hide { transform: scale(0.8) rotate(10deg) translateY(200px) translateX(-150px) !important; opacity: 0 !important; }
+
+    .hf-bl { bottom: -5%; left: -10%; }
+    .hf-bl.show { transform: rotate(10deg); }
+    .hf-bl.hide { transform: scale(0.8) rotate(10deg) translateY(-100px) translateX(180px) !important; opacity: 0 !important; }
+
+    .hf-br { bottom: -5%; right: -10%; }
+    .hf-br.show { transform: rotate(-10deg); }
+    .hf-br.hide { transform: scale(0.8) rotate(-10deg) translateY(-100px) translateX(-180px) !important; opacity: 0 !important; }
 
     /* --- COMMON --- */
     .container {
@@ -215,6 +236,7 @@
         top: 0; left: 0; width: 100%; height: 100%;
         background: transparent;
         z-index: 5;
+        /* cursor: pointer; */
     }
     iframe { width: 100%; height: 100%; border: 0; }
 
@@ -228,6 +250,8 @@
     .details-section { padding: 3rem 1.5rem; }
     .details-grid { display: grid; gap: 2rem; }
     .details-item { background: rgba(255,255,255,0.4); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(84, 11, 22, 0.05); }
+    .details-item a { text-decoration: none; color: inherit; font-weight: bold; transition: color 0.3s ease; }
+    .details-item a:hover { color: var(--accent-rose); }
     .details-item h3 { color: var(--bg-dark); font-size: 1.4rem; margin-bottom: 0.8rem; }
     .details-item.important { background: var(--pal-champagne); border: 2px solid var(--pal-burgundy); text-align: center; order: -1; }
     .badge-18 { display: inline-block; background: var(--pal-burgundy); color: var(--pal-champagne); font-family: 'Playfair Display', serif; font-size: 1.8rem; padding: 0.2rem 1rem; border-radius: 50px; margin-bottom: 1rem; }
@@ -253,15 +277,43 @@
     .radio-option input:checked + label { background: var(--pal-champagne); color: var(--bg-dark); font-weight: bold; }
 
     .checkbox-group { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    .checkbox-option label { display: flex; align-items: center; padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 10px; cursor: pointer; }
-    .checkbox-option input { margin-right: 12px; width: 20px; height: 20px; accent-color: var(--pal-champagne); }
+    .checkbox-option { display: flex; align-items: center; }
+    .checkbox-option label { display: flex; align-items: center; padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: 10px; cursor: pointer; flex: 1; }
+    .checkbox-option input { margin-right: 12px; width: 22px; height: 22px; flex-shrink: 0; appearance: none; -webkit-appearance: none; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; cursor: pointer; position: relative; transition: background 0.2s, border-color 0.2s; }
+    .checkbox-option input:checked { background: var(--pal-champagne); border-color: var(--pal-champagne); }
+    .checkbox-option input:checked::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--bg-dark); font-size: 14px; font-weight: bold; }
 
     .form-submit { width: 100%; padding: 1.2rem; background: var(--pal-champagne); color: var(--bg-dark); border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; margin-top: 1rem; cursor: pointer; }
     .section-divider { height: 1px; background: rgba(84, 11, 22, 0.2); width: 60%; margin: 3rem auto; border: none; }
 
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-    [data-animate] { opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
-    [data-animate].visible { opacity: 1; transform: translateY(0); }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+    [data-animate] { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    [data-animate="fade-up"] { transform: translateY(40px); }
+    [data-animate="fade-left"] { transform: translateX(-40px); }
+    [data-animate="fade-right"] { transform: translateX(40px); }
+    [data-animate="scale"] { transform: scale(0.95); }
+    [data-animate].visible { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+
+    .countdown-item { opacity: 0; animation: scaleIn 0.6s ease-out forwards; }
+    .countdown-item:nth-of-type(1) { animation-delay: 0.1s; }
+    .countdown-item:nth-of-type(2) { animation-delay: 0.2s; }
+    .countdown-item:nth-of-type(3) { animation-delay: 0.3s; }
+    .countdown-item:nth-of-type(4) { animation-delay: 0.4s; }
+    .countdown-number { animation: pulse 2s ease-in-out infinite; }
+
+    /* Плавающие цветы */
+    .floating-hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; overflow: hidden; }
+    .floating-heart { position: absolute; width: 40px; height: 40px; opacity: 0; animation: floatHeart 15s infinite ease-in-out; }
+    .floating-heart img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+    @keyframes floatHeart {
+      0% { opacity: 0; transform: translateY(100vh) rotate(0deg); }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-100px) rotate(360deg); }
+    }
 
     @media (min-width: 768px) {
       .checkbox-group { grid-template-columns: 1fr 1fr; }
@@ -272,20 +324,73 @@
       .hero-photo { width: 400px; }
       .container { max-width: 800px; }
     }
+
+    /* Мобильная оптимизация формы */
+    @media (max-width: 480px) {
+      .rsvp-section {
+        margin: 1.5rem 0.75rem 1rem;
+        padding: 3rem 1rem 4rem;
+        border-radius: 18px;
+      }
+
+      .rsvp-form {
+        padding: 1.2rem 1rem;
+        border-radius: 14px;
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+
+      .form-label {
+        font-size: 0.75rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .radio-group {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .radio-option label {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .checkbox-group {
+        gap: 8px;
+      }
+
+      .checkbox-option label {
+        padding: 0.7rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      input[type="text"] {
+        padding: 0.85rem 0.9rem;
+        font-size: 0.95rem;
+      }
+
+      .form-submit {
+        padding: 1rem;
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="floating-hearts" id="floatingHearts"></div>
 
   <section class="hero-section">
     <div class="hero-flowers">
-      <div class="hero-flower hf-tl show"><img src="1234221312.png" alt=""></div>
-      <div class="hero-flower hf-tr show"><img src="Gemini_Generated_Image_dr87k5dr87k.png" alt=""></div>
-      <div class="hero-flower hf-bl show"><img src="1234221312.png" alt=""></div>
-      <div class="hero-flower hf-br show"><img src="234231234234.png" alt=""></div>
+      <div class="hero-flower hf-tl"><img src="1234221312.png" alt=""></div>
+      <div class="hero-flower hf-tr"><img src="Gemini_Generated_Image_dr87k5dr87k.png" alt=""></div>
+      <div class="hero-flower hf-bl"><img src="1234221312.png" alt=""></div>
+      <div class="hero-flower hf-br"><img src="234231234234.png" alt=""></div>
     </div>
 
     <div class="hero-content">
-      <div class="save-the-day">SAVE THE DATE</div>
+      <div class="save-the-day">Сохраните дату</div>
       <img src="photo_5267273164138418047_y.jpg" alt="Вика и Макс" class="hero-photo">
       <h1 class="hero-names">ВИКА <span>&</span> МАКС</h1>
       <div class="hero-date-wrapper">
@@ -300,7 +405,7 @@
     <div class="container">
       <h2 class="countdown-title">До свадьбы осталось</h2>
       <div class="countdown-grid">
-        <div class="countdown-item"><span class="countdown-number" id="days">00</span><div class="countdown-label">дней</div></div>
+        <div class="countdown-item"><span class="countdown-number" id="days">000</span><div class="countdown-label">дней</div></div>
         <span class="countdown-separator">:</span>
         <div class="countdown-item"><span class="countdown-number" id="hours">00</span><div class="countdown-label">часов</div></div>
         <span class="countdown-separator">:</span>
@@ -381,7 +486,7 @@
         </div>
         <div class="details-item">
           <h3>Подарки</h3>
-          <p>Лучший подарок для нас — вклад в бюджет нашей молодой семьи. Просим не дарить цветы — мы сразу улетаем.</p>
+          <p>Просим вас не дарить нам цветы. Сразу после торжества мы уезжаем в свадебное путешествие и не сможем насладиться их красотой. Однако вы можете выразить свою любовь и радость, подарив нам подарочный сертификат или бутылку хорошего вина или шампанского. Мы обещаем, что эти подарки точно не завянут!</p>
         </div>
         <div class="details-item">
           <h3>Трансфер</h3>
@@ -389,7 +494,7 @@
         </div>
         <div class="details-item">
           <h3>Связь</h3>
-          <p>Вика: +7 (999) 123-45-67<br>Макс: +7 (999) 765-43-21</p>
+          <p>Жених: <a href="tel:+79629950057">+7 (962) 995-00-57</a></p>
         </div>
       </div>
     </div>
@@ -429,14 +534,32 @@
         </div>
 
         <div class="form-group">
+          <label class="form-label">Какое вино предпочитаете?</label>
+          <div class="radio-group wine-group">
+            <div class="radio-option">
+              <input type="radio" id="wine-dry" name="wine" value="dry">
+              <label for="wine-dry">Сухое</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="wine-semi-dry" name="wine" value="semi-dry">
+              <label for="wine-semi-dry">Полусухое</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="wine-semi-sweet" name="wine" value="semi-sweet">
+              <label for="wine-semi-sweet">Полусладкое</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="form-label">Напитки</label>
           <div class="checkbox-group">
-            <div class="checkbox-option"><label><input type="checkbox" name="alcohol" value="white-wine"> Белое вино</label></div>
-            <div class="checkbox-option"><label><input type="checkbox" name="alcohol" value="red-wine"> Красное вино</label></div>
-            <div class="checkbox-option"><label><input type="checkbox" name="alcohol" value="champagne"> Шампанское</label></div>
-            <div class="checkbox-option"><label><input type="checkbox" name="alcohol" value="cognac"> Коньяк</label></div>
-            <div class="checkbox-option"><label><input type="checkbox" name="alcohol" value="vodka"> Водка</label></div>
-            <div class="checkbox-option"><label><input type="checkbox" name="alcohol" value="non-alcoholic"> Б/А напитки</label></div>
+            <div class="checkbox-option"><label><input type="checkbox" name="alcohol_white" value="1"> Белое вино</label></div>
+            <div class="checkbox-option"><label><input type="checkbox" name="alcohol_red" value="1"> Красное вино</label></div>
+            <div class="checkbox-option"><label><input type="checkbox" name="alcohol_champagne" value="1"> Шампанское</label></div>
+            <div class="checkbox-option"><label><input type="checkbox" name="alcohol_cognac" value="1"> Коньяк</label></div>
+            <div class="checkbox-option"><label><input type="checkbox" name="alcohol_vodka" value="1"> Водка</label></div>
+            <div class="checkbox-option"><label><input type="checkbox" name="alcohol_non_alcoholic" value="1"> Б/А напитки</label></div>
           </div>
         </div>
 
@@ -451,28 +574,20 @@
   </section>
 
   <script>
-    // --- НАСТРОЙКИ ---
-    // Вставь сюда URL, который ты получишь после развертывания Google Apps Script
-    // Пример: 'https://script.google.com/macros/s/AKfycbx.../exec'
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwboQlYgrIg4xjIAORicpmMS__QTBsRSIuhPLmDjNFbO78TcxbtCMU09I_ZStwmJci2/exec';
-    
-    // Telegram настройки
-    const TG_TOKEN = '8316450407:AAFQbmRbqaixPabmm9Ek8GkR1_DV4oPqdrI';
-    const TG_CHAT_ID = '-1003830584076';
-
-    // --- ЛОГИКА ---
-    
-    // Таймер
     const targetDate = new Date('2026-08-14T11:00:00+03:00').getTime();
+    
     function updateTimer() {
       const now = new Date().getTime();
       const diff = targetDate - now;
+
       if (diff < 0) return;
+
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
       const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const s = Math.floor((diff % (1000 * 60)) / 1000);
-      document.getElementById('days').innerText = d < 10 ? '0'+d : d;
+
+      document.getElementById('days').innerText = String(d).padStart(3, '0');
       document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
       document.getElementById('minutes').innerText = m < 10 ? '0'+m : m;
       document.getElementById('seconds').innerText = s < 10 ? '0'+s : s;
@@ -480,66 +595,158 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Анимации
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 
-    // ОТПРАВКА ФОРМЫ
+    // Hero-цветы: появление через 0.5с и скрытие при скролле (как на первом сайте)
+    const heroSection = document.querySelector('.hero-section');
+    const heroFlowers = document.querySelectorAll('.hero-flower');
+    let heroFlowersVisible = false;
+
+    setTimeout(() => {
+      heroFlowers.forEach((flower, index) => {
+        setTimeout(() => flower.classList.add('show'), index * 100);
+      });
+      heroFlowersVisible = true;
+    }, 500);
+
+    function handleHeroScroll() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+      if (scrollY > heroBottom * 0.3 && heroFlowersVisible) {
+        heroFlowersVisible = false;
+        heroFlowers.forEach((f, i) => setTimeout(() => { f.classList.remove('show'); f.classList.add('hide'); }, i * 50));
+      } else if (scrollY <= heroBottom * 0.3 && !heroFlowersVisible) {
+        heroFlowersVisible = true;
+        heroFlowers.forEach((f, i) => setTimeout(() => { f.classList.remove('hide'); f.classList.add('show'); }, i * 80));
+      }
+    }
+    window.addEventListener('scroll', handleHeroScroll, { passive: true });
+
+    // Плавающие цветы
+    function createFloatingHearts() {
+      const container = document.getElementById('floatingHearts');
+      for (let i = 0; i < 8; i++) {
+        const el = document.createElement('div');
+        el.className = 'floating-heart';
+        const img = document.createElement('img');
+        img.src = 'Flower.png';
+        img.alt = '';
+        el.appendChild(img);
+        el.style.left = Math.random() * 100 + '%';
+        el.style.animationDelay = Math.random() * 15 + 's';
+        el.style.animationDuration = (10 + Math.random() * 10) + 's';
+        container.appendChild(el);
+      }
+    }
+    createFloatingHearts();
+
     document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const btn = this.querySelector('button');
       const originalText = btn.innerText;
       btn.innerText = 'Отправка...';
-      btn.disabled = true;
-      
-      const formData = new FormData(this);
-      const data = {
+
+      const form = this;
+      const formData = new FormData(form);
+      const wineLabels = { dry: 'Сухое', 'semi-dry': 'Полусухое', 'semi-sweet': 'Полусладкое' };
+      const wine = formData.get('wine') ? wineLabels[formData.get('wine')] : '—';
+      const alcoholList = [];
+      if (formData.get('alcohol_white')) alcoholList.push('Белое вино');
+      if (formData.get('alcohol_red')) alcoholList.push('Красное вино');
+      if (formData.get('alcohol_champagne')) alcoholList.push('Шампанское');
+      if (formData.get('alcohol_cognac')) alcoholList.push('Коньяк');
+      if (formData.get('alcohol_vodka')) alcoholList.push('Водка');
+      if (formData.get('alcohol_non_alcoholic')) alcoholList.push('Б/А');
+      const alcoholStr = alcoholList.length ? alcoholList.join(', ') : '—';
+
+      const text = `💌 <b>Новый ответ!</b>
+👤 ${formData.get('name')}
+✅ ${formData.get('attendance') === 'yes' ? 'Будет' : 'Не сможет'}
+🍇 Вино: ${wine}
+🍷 Напитки: ${alcoholStr}
+🤧 Аллергии: ${formData.get('allergies') || '—'}`;
+
+      const TOKEN = '8316450407:AAFQbmRbqaixPabmm9Ek8GkR1_DV4oPqdrI';
+      const CHAT_ID = '-1003830584076';
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxfsYsfwQ6Qlw6gDwPInwbMiMy3DPwJCqpSGQPL6n7_6PaQMFSq3pFZAydXHG832JI/exec'; // Вставь сюда URL веб-приложения из Google Apps Script
+
+      const payload = {
         name: formData.get('name'),
         attendance: formData.get('attendance'),
-        alcohol: formData.getAll('alcohol').join(', ') || 'Нет',
-        allergies: formData.get('allergies') || 'Нет'
+        wine: formData.get('wine') || '',
+        alcohol_white: !!formData.get('alcohol_white'),
+        alcohol_red: !!formData.get('alcohol_red'),
+        alcohol_champagne: !!formData.get('alcohol_champagne'),
+        alcohol_cognac: !!formData.get('alcohol_cognac'),
+        alcohol_vodka: !!formData.get('alcohol_vodka'),
+        alcohol_non_alcoholic: !!formData.get('alcohol_non_alcoholic'),
+        allergies: formData.get('allergies') || ''
       };
 
-      // 1. Отправка в Telegram
-      const tgText = `
-💌 <b>Новый ответ!</b>
-👤 ${data.name}
-✅ ${data.attendance === 'yes' ? 'Будет' : 'Не будет'}
-🍷 ${data.alcohol}
-🤧 ${data.allergies}
-      `;
-      
-      const sendTelegram = fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ chat_id: TG_CHAT_ID, text: tgText, parse_mode: 'html' })
-      });
-
-      // 2. Отправка в Google Таблицу (если URL задан)
-      let sendGoogle = Promise.resolve();
-      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith('http')) {
-        sendGoogle = fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors', // Важно для Google Script
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(data)
-        });
-      }
-
       try {
-        await Promise.all([sendTelegram, sendGoogle]);
+        await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'html' })
+        });
+        if (GOOGLE_SCRIPT_URL) {
+          // Важно: Apps Script плохо дружит с CORS/preflight для JSON.
+          // Поэтому шлём "simple request" (form-urlencoded), это стабильно.
+          const googleBody = new URLSearchParams({
+            name: payload.name,
+            attendance: payload.attendance,
+            wine: payload.wine,
+            alcohol_white: payload.alcohol_white ? '1' : '0',
+            alcohol_red: payload.alcohol_red ? '1' : '0',
+            alcohol_champagne: payload.alcohol_champagne ? '1' : '0',
+            alcohol_cognac: payload.alcohol_cognac ? '1' : '0',
+            alcohol_vodka: payload.alcohol_vodka ? '1' : '0',
+            alcohol_non_alcoholic: payload.alcohol_non_alcoholic ? '1' : '0',
+            allergies: payload.allergies
+          }).toString();
+
+          // 1) Самый живучий вариант (без CORS/ответа)
+          let sentToGoogle = false;
+          try {
+            if (navigator.sendBeacon) {
+              const blob = new Blob([googleBody], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
+              sentToGoogle = navigator.sendBeacon(GOOGLE_SCRIPT_URL, blob);
+            }
+          } catch (_) {}
+
+          // 2) Если beacon не сработал — пробуем fetch
+          if (!sentToGoogle) {
+            try {
+              await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+                body: googleBody
+              });
+              sentToGoogle = true;
+            } catch (_) {}
+          }
+
+          // 3) Последний фоллбек: GET через картинку (нужен doGet в Apps Script)
+          if (!sentToGoogle) {
+            const img = new Image();
+            img.src = `${GOOGLE_SCRIPT_URL}?${googleBody}`;
+          }
+        }
         alert('Спасибо! Мы получили ваш ответ.');
-        this.reset();
+        form.reset();
       } catch (err) {
-        console.error(err);
-        alert('Ошибка отправки. Пожалуйста, напишите нам лично.');
+        alert('Ошибка отправки. Напишите нам лично.');
       } finally {
         btn.innerText = originalText;
-        btn.disabled = false;
       }
     });
   </script>
