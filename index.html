@@ -51,7 +51,7 @@
       font-family: 'Playfair Display', serif;
     }
 
-    /* --- HERO SECTION --- */
+    /* --- HERO SECTION (десктоп — классическая карточка) --- */
     .hero-section {
       min-height: 100vh;
       min-height: 100svh;
@@ -62,7 +62,6 @@
       text-align: center;
       padding: 2rem 1rem;
       position: relative;
-      /* Убрали overflow: hidden, чтобы контент не обрезался, если он выше экрана */
     }
 
     .hero-content {
@@ -87,7 +86,6 @@
       display: block;
       aspect-ratio: 3/4;
       object-fit: cover;
-      /* Закругления */
       border-radius: 24px; 
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       opacity: 0;
@@ -100,7 +98,7 @@
       position: absolute;
       top: -10px; left: -10px; right: -10px; bottom: -10px;
       border: 1px solid var(--accent-dark);
-      border-radius: 30px; /* Рамка тоже закругленная */
+      border-radius: 30px;
       opacity: 0.3;
       z-index: -1;
     }
@@ -325,6 +323,91 @@
       .container { max-width: 800px; }
     }
 
+    /* Мобильный hero — фото фоном + мягкие края */
+    @media (max-width: 768px) {
+      .hero-section {
+        overflow: hidden;
+        color: var(--text-light);
+        background:
+          linear-gradient(120deg, rgba(0, 0, 0, 0.45), rgba(84, 11, 22, 0.85)),
+          url('photo_5267273164138418047_y.jpg') center/cover no-repeat;
+      }
+
+      .hero-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 60%);
+        mix-blend-mode: soft-light;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Размытый низ фото, чтобы не было резкого обрыва */
+      .hero-section::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 10px;
+        /* Плавный переход от фото к фону страницы, без резкой границы */
+        background: linear-gradient(
+          to bottom,
+          rgba(84, 11, 22, 0) 0%,
+          rgba(84, 11, 22, 0.6) 35%,
+          var(--bg-light) 100%
+        );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .hero-content {
+        max-width: 520px;
+        z-index: 2;
+        padding: 1.6rem 1.4rem;
+        border-radius: 22px;
+        background: rgba(84, 11, 22, 0.82);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(10px);
+      }
+
+      .save-the-day {
+        margin-bottom: 1.4rem;
+        color: var(--text-light);
+      }
+
+      .hero-photo {
+        display: none;
+      }
+
+      .hero-names {
+        color: var(--text-light);
+      }
+
+      .hero-date-line {
+        background: rgba(205, 191, 178, 0.8);
+        opacity: 1;
+      }
+
+      .hero-date {
+        color: var(--text-light);
+      }
+
+      /* Цветы — сильнее блюр и мягче, чтобы не было заметно “кривых” краёв */
+      .hero-flower {
+        filter: blur(1.3px);
+      }
+
+      .hero-flower.show {
+        opacity: 0.08;
+      }
+
+      .hero-flower img {
+        filter: blur(0.8px);
+      }
+    }
+
     /* Мобильная оптимизация формы */
     @media (max-width: 480px) {
       .rsvp-section {
@@ -390,7 +473,7 @@
     </div>
 
     <div class="hero-content">
-      <div class="save-the-day">Проведите этот день с нами</div>
+      <div class="save-the-day">проведите этот день с нами</div>
       <img src="photo_5267273164138418047_y.jpg" alt="Вика и Макс" class="hero-photo">
       <h1 class="hero-names">ВИКА <span>&</span> МАКС</h1>
       <div class="hero-date-wrapper">
