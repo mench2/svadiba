@@ -740,27 +740,7 @@
 
       const form = this;
       const formData = new FormData(form);
-      const wineLabels = { dry: 'Сухое', 'semi-dry': 'Полусухое', 'semi-sweet': 'Полусладкое' };
-      const wine = formData.get('wine') ? wineLabels[formData.get('wine')] : '—';
-      const alcoholList = [];
-      if (formData.get('alcohol_white')) alcoholList.push('Белое вино');
-      if (formData.get('alcohol_red')) alcoholList.push('Красное вино');
-      if (formData.get('alcohol_champagne')) alcoholList.push('Шампанское');
-      if (formData.get('alcohol_cognac')) alcoholList.push('Коньяк');
-      if (formData.get('alcohol_vodka')) alcoholList.push('Водка');
-      if (formData.get('alcohol_non_alcoholic')) alcoholList.push('Б/А');
-      const alcoholStr = alcoholList.length ? alcoholList.join(', ') : '—';
-
-      const text = `💌 <b>Новый ответ!</b>
-👤 ${formData.get('name')}
-✅ ${formData.get('attendance') === 'yes' ? 'Будет' : 'Не сможет'}
-🍇 Вино: ${wine}
-🍷 Напитки: ${alcoholStr}
-🤧 Аллергии: ${formData.get('allergies') || '—'}`;
-
-      const TOKEN = '8316450407:AAFQbmRbqaixPabmm9Ek8GkR1_DV4oPqdrI';
-      const CHAT_ID = '-1003830584076';
-      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxfsYsfwQ6Qlw6gDwPInwbMiMy3DPwJCqpSGQPL6n7_6PaQMFSq3pFZAydXHG832JI/exec'; // Вставь сюда URL веб-приложения из Google Apps Script
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9OD86schkFaxJMMbZd2H3HljGEsW26eL6ISkg3u7JhNmbwbW8nGPrvcdPoAPRyEM/exec';
 
       const payload = {
         name: formData.get('name'),
@@ -776,54 +756,42 @@
       };
 
       try {
-        await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'html' })
-        });
-        if (GOOGLE_SCRIPT_URL) {
-          // Важно: Apps Script плохо дружит с CORS/preflight для JSON.
-          // Поэтому шлём "simple request" (form-urlencoded), это стабильно.
-          const googleBody = new URLSearchParams({
-            name: payload.name,
-            attendance: payload.attendance,
-            wine: payload.wine,
-            alcohol_white: payload.alcohol_white ? '1' : '0',
-            alcohol_red: payload.alcohol_red ? '1' : '0',
-            alcohol_champagne: payload.alcohol_champagne ? '1' : '0',
-            alcohol_cognac: payload.alcohol_cognac ? '1' : '0',
-            alcohol_vodka: payload.alcohol_vodka ? '1' : '0',
-            alcohol_non_alcoholic: payload.alcohol_non_alcoholic ? '1' : '0',
-            allergies: payload.allergies
-          }).toString();
+        const googleBody = new URLSearchParams({
+          name: payload.name,
+          attendance: payload.attendance,
+          wine: payload.wine,
+          alcohol_white: payload.alcohol_white ? '1' : '0',
+          alcohol_red: payload.alcohol_red ? '1' : '0',
+          alcohol_champagne: payload.alcohol_champagne ? '1' : '0',
+          alcohol_cognac: payload.alcohol_cognac ? '1' : '0',
+          alcohol_vodka: payload.alcohol_vodka ? '1' : '0',
+          alcohol_non_alcoholic: payload.alcohol_non_alcoholic ? '1' : '0',
+          allergies: payload.allergies
+        }).toString();
 
-          // 1) Самый живучий вариант (без CORS/ответа)
-          let sentToGoogle = false;
-          try {
-            if (navigator.sendBeacon) {
-              const blob = new Blob([googleBody], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
-              sentToGoogle = navigator.sendBeacon(GOOGLE_SCRIPT_URL, blob);
-            }
-          } catch (_) {}
+        // Прямая отправка в Google Apps Script без Telegram.
+        let sentToGoogle = false;
 
-          // 2) Если beacon не сработал — пробуем fetch
-          if (!sentToGoogle) {
-            try {
-              await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-                body: googleBody
-              });
-              sentToGoogle = true;
-            } catch (_) {}
+        try {
+          if (navigator.sendBeacon) {
+            const blob = new Blob([googleBody], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
+            sentToGoogle = navigator.sendBeacon(GOOGLE_SCRIPT_URL, blob);
           }
+        } catch (_) {}
 
-          // 3) Последний фоллбек: GET через картинку (нужен doGet в Apps Script)
-          if (!sentToGoogle) {
-            const img = new Image();
-            img.src = `${GOOGLE_SCRIPT_URL}?${googleBody}`;
-          }
+        if (!sentToGoogle) {
+          await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+            body: googleBody
+          });
+          sentToGoogle = true;
         }
+
+        if (!sentToGoogle) {
+          throw new Error('Google Script request failed');
+        }
+
         alert('Спасибо! Мы получили ваш ответ.');
         form.reset();
       } catch (err) {
