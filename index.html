@@ -220,6 +220,16 @@
     .schedule-time { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent-rose); margin-bottom: 0.5rem; font-weight: bold; }
     .schedule-event h3 { font-size: 1.2rem; margin-bottom: 0.3rem; font-weight: 500; }
     .schedule-event p { font-size: 0.9rem; opacity: 0.8; }
+    .schedule-event a,
+    .venue-list a {
+      color: inherit;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .venue-list { display: grid; gap: 1.2rem; }
+    .venue-item h3 { font-size: 1.3rem; margin-bottom: 0.35rem; }
+    .venue-item p { opacity: 0.8; }
 
     /* КАРТА С ЗАЩИТОЙ ОТ СКРОЛЛА */
     .map-wrapper {
@@ -504,37 +514,40 @@
       <h2 class="section-title">Программа дня</h2>
       <div class="schedule-timeline">
         <div class="schedule-item">
-          <div class="schedule-time">11:00</div>
-          <div class="schedule-event"><h3>Сбор гостей</h3><p>Локация: «Шекснинский отдел ЗАГС»</br>рп. Шексна, ул. Октябрьская, д. 67</p></div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">12:30</div>
-          <div class="schedule-event"><h3>Церемония</h3><p>Трогательный момент</p></div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">14:00</div>
-          <div class="schedule-event"><h3>Выезд</h3><p>Едем на банкет</p></div>
+          <div class="schedule-time">14:20</div>
+          <div class="schedule-event"><h3>Сбор гостей</h3><p>Локация: «Шекснинский отдел ЗАГС»<br>рп. Шексна, ул. Октябрьская, д. 67</p></div>
         </div>
         <div class="schedule-item">
           <div class="schedule-time">15:00</div>
-          <div class="schedule-event"><h3>ЗАГС</h3><p>Торжественная роспись</p></div>
+          <div class="schedule-event"><h3>Выездная церемония</h3><p><a href="https://maps.google.com/maps/place//data=!4m2!3m1!1s0x46ae5446c8ee62d1:0xf1b7820857e990bb?entry=s&amp;sa=X&amp;ved=2ahUKEwjmnaOO0LSVAxVxJhAIHUwaPBIQ4kB6BAgVEAA&amp;hl=ru" target="_blank" rel="noopener">Михайловское подворье</a></p></div>
         </div>
         <div class="schedule-item">
-          <div class="schedule-time">17:00</div>
-          <div class="schedule-event"><h3>Банкет</h3><p>Ужин и танцы</p></div>
+          <div class="schedule-time">16:00</div>
+          <div class="schedule-event"><h3>Банкет</h3><p>Локация: «Гранд»</p></div>
         </div>
       </div>
 
       <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-        <h2 class="section-title" style="color: var(--text-light)">Локация</h2>
-        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Банкетный зал "Северная"</h3>
-        <p style="margin-bottom: 2rem; opacity: 0.8;">пгт. Шексна, мкр. Шексна Северная,<br>ул. Первомайская, 1А</p>
-        
-        <div class="map-wrapper">
-            <div class="map-overlay" onclick="this.style.pointerEvents='none'; this.style.opacity='0';"></div>
-            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A39fe2b4b3f9c3e03560268ad282b331535bfaf7bff9c19db2410ebe4716d02a6&amp;source=constructor" frameborder="0"></iframe>
+        <h2 class="section-title" style="color: var(--text-light)">Локации</h2>
+        <div class="venue-list">
+          <div class="venue-item">
+            <h3>Сбор гостей</h3>
+            <p>Локация: «Шекснинский отдел ЗАГС»<br>рп. Шексна, ул. Октябрьская, д. 67</p>
+          </div>
+          <div class="venue-item">
+            <h3>Выездная церемония</h3>
+            <p><a href="https://maps.google.com/maps/place//data=!4m2!3m1!1s0x46ae5446c8ee62d1:0xf1b7820857e990bb?entry=s&amp;sa=X&amp;ved=2ahUKEwjmnaOO0LSVAxVxJhAIHUwaPBIQ4kB6BAgVEAA&amp;hl=ru" target="_blank" rel="noopener">Михайловское подворье</a></p>
+          </div>
+          <div class="venue-item">
+            <h3>Банкет</h3>
+            <p>«Гранд»</p>
+            <div class="map-wrapper" style="margin-top: 1rem;">
+              <div class="map-overlay" onclick="this.style.pointerEvents='none'; this.style.opacity='0';"></div>
+              <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A39fe2b4b3f9c3e03560268ad282b331535bfaf7bff9c19db2410ebe4716d02a6&amp;source=constructor" frameborder="0"></iframe>
+            </div>
+            <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.5rem;">Нажмите на карту, чтобы активировать</p>
+          </div>
         </div>
-        <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.5rem;">Нажмите на карту, чтобы активировать</p>
       </div>
     </div>
   </section>
@@ -577,7 +590,7 @@
         </div>
         <div class="details-item">
           <h3>Связь</h3>
-          <p>Жених: <a href="tel:+79629950057">+7 (962) 995-00-57</a></p>
+          <p>Жених: <a href="tel:+79992330666">+7 (999) 233-06-66</a></p>
         </div>
       </div>
     </div>
@@ -657,7 +670,7 @@
   </section>
 
   <script>
-    const targetDate = new Date('2026-08-14T11:00:00+03:00').getTime();
+    const targetDate = new Date('2026-08-14T14:20:00+03:00').getTime();
     
     function updateTimer() {
       const now = new Date().getTime();
